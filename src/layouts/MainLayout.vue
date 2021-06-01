@@ -9,9 +9,10 @@
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
+          
         />
 
-        <q-toolbar-title>
+        <q-toolbar-title @click="() => $router.replace('/')">
           Quasar App
         </q-toolbar-title>
 
