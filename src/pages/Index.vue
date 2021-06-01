@@ -2,10 +2,16 @@
   <q-page>
     <q-card-section class="q-gutter-lg">
       <h3 class="q-no-margin q-padding-horizontal">Meranaw Learning App</h3>
-      <q-card class="my-card text-white bg-blue-grey text-white q-pa-md">
+      <q-card
+        class="my-card cursor-pointer text-white bg-blue-grey text-white q-pa-md"
+        @click="() => $router.replace('/learn')"
+      >
         <q-card-section>
           <div class="text-h4">Learn</div>
           <div class="text-subtitle2">Maganad Tano!</div>
+        </q-card-section>
+        <q-card-section>
+          <q-img src="~assets/design/study.png"></q-img>
         </q-card-section>
       </q-card>
 
