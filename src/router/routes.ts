@@ -1,11 +1,15 @@
 import { RouteConfig } from 'vue-router';
+import MainLayout from 'layouts/MainLayout.vue';
+import Index from 'pages/Index.vue';
+import Learn from 'pages/Learn.vue';
 
 const routes: RouteConfig[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: Index },
+      { path: 'learn', component: Learn }
     ]
   },
 
