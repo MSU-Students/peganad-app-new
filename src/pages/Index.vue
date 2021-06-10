@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <!-- <Header/>bg-cyan -->
     <div class="q-gutter-y-lg">
-      <h3 class="text-center">Meranaw Learning App</h3>
+      <h3 class="text-center q-pt-lg">Peganad App</h3>
       <q-card
         class="learn-card cursor-pointer text-white bg-pink text-white q-pa-md"
         @click="() => $router.replace('/learn')"
@@ -30,11 +30,8 @@
 </template>
 
 <script>
-import Header from 'src/components/Header.vue';
 export default {
-  components: {
-    Header
-  }
+ 
 };
 </script>
 

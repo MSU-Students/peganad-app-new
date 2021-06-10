@@ -1,15 +1,12 @@
 <template>
   <q-layout>
-    <q-header :class="$route.path == '/learn' ? 'bg-cyan' : 'bg-primary'">
-      <q-toolbar v-if="$route.path == '/'">
-        <q-toolbar-title @click="() => $router.replace('/')">
-          Peganad App
-        </q-toolbar-title>
-
-        <q-btn dense flat round icon="settings" />
-      </q-toolbar>
-      <q-toolbar v-else-if="$route.path == '/learn'">
-        <q-btn flat round icon="arrow_back" to="/" />
+    <q-header :class="headerColor()">
+      <q-toolbar
+        v-if="
+          $route.path == '/learn' || $route.path == `/learn/${$route.params.id}`
+        "
+      >
+        <q-btn flat round icon="arrow_back" :to="$route.path == '/learn' ? '/': '/learn'" />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -17,3 +14,20 @@
     </q-page-container>
   </q-layout>
 </template>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+
+@Component({})
+export default class MainLayout extends Vue {
+  headerColor() {
+    if (this.$route.path == '/learn') {
+      return 'bg-pink';
+    } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
+      return 'bg-purple';
+    } else {
+      return 'bg-white';
+    }
+  }
+}
+</script>
