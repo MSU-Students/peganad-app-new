@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-md">
-    <LearnCard />
+  <q-page class="q-pa-md bg-info">
+    <LearnCard />    
   </q-page>
 </template>
 
