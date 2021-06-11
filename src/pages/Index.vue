@@ -25,7 +25,7 @@
           <q-img src="~assets/design/game.png" width="200px"></q-img>
         </q-card-section>
       </q-card>
-    </q-card-section>
+    </div>
   </q-page>
 </template>
 
