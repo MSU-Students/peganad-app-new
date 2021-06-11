@@ -1,21 +1,22 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+  <q-layout>
+    <q-header :class="headerColor()">
+      <q-toolbar
+        v-if="
+          $route.path == '/learn' || $route.path == `/learn/${$route.params.id}`
+        "
+      >
         <q-btn
           flat
-          dense
           round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          icon="arrow_back"
+          :to="$route.path == '/learn' ? '/' : '/learn'"
         />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title
+          v-if="$route.path == `/learn/${$route.params.id}`"
+          class="text-capitalize absolute-center"
+          >Learn {{ $route.params.id }}</q-toolbar-title
+        > 
       </q-toolbar>
     </q-header>
 
@@ -100,7 +101,14 @@ import { Vue, Component } from 'vue-property-decorator';
   components: { EssentialLink }
 })
 export default class MainLayout extends Vue {
-  leftDrawerOpen = false;
-  essentialLinks = linksData;
+  headerColor() {
+    if (this.$route.path == '/learn') {
+      return 'bg-pink-2';
+    } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
+      return 'bg-info';
+    } else {
+      return 'bg-white';
+    }
+  }
 }
 </script>
