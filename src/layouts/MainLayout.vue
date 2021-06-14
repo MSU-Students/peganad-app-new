@@ -102,7 +102,7 @@ import { Vue, Component } from 'vue-property-decorator';
 })
 export default class MainLayout extends Vue {
   headerColor() {
-    if (this.$route.path == '/learn') {
+    if (this.onLearnPage()) {
       return 'bg-pink-2';
     } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
       return 'bg-info';
