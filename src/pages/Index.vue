@@ -1,10 +1,10 @@
 <template>
-  <q-page class="q-pa-md bg-blue">
+  <q-page class="q-pa-md">
     <!-- <Header/>bg-cyan -->
     <div class="q-gutter-y-lg">
-      <h3 class="text-center text-white q-pt-lg">Peganad App</h3>
+      <h3 class="text-center q-pt-lg">Peganad App</h3>
       <q-card
-        class="learn-card cursor-pointer text-black bg-pink-2 text-white q-pa-md"
+        class="learn-card cursor-pointer text-white bg-pink text-white q-pa-md"
         @click="() => $router.replace('/learn')"
       >
         <q-card-section>
@@ -29,9 +29,10 @@
   </q-page>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-
-@Component({})
-export default class PageIndex extends Vue {}
+<script>
+export default {
+ 
+};
 </script>
+
+<style scoped></style>
