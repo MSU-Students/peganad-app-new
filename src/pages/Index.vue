@@ -9,17 +9,17 @@
       >
         <q-card-section>
           <div class="text-h4">Learn</div>
-          <div class="text-subtitle1">Maganad Tano!</div>
+          <div class="text-h6">Maganad Tano!</div>
         </q-card-section>
         <q-card-section class="text-center">
           <q-img src="~assets/design/study.png" width="200px"></q-img>
         </q-card-section>
       </q-card>
 
-      <q-card class="my-card text-white bg-blue text-white q-pa-md">
+      <q-card class="my-card text-black bg-green-2 text-white q-pa-md">
         <q-card-section>
           <div class="text-h4">Game</div>
-          <div class="text-subtitle1">Gitagita Tano!</div>
+          <div class="text-h6">Gitagita Tano!</div>
         </q-card-section>
         <q-card-section class="text-center">
           <q-img src="~assets/design/game.png" width="200px"></q-img>
