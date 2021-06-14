@@ -3,7 +3,7 @@
     <q-header :class="headerColor()">
       <q-toolbar
         v-if="
-          $route.path == '/learn' || $route.path == `/learn/${$route.params.id}`
+          ['/learn', `/learn/${$route.params.id}`].find((p) => (p == $route.path))
         "
       >
         <q-btn
