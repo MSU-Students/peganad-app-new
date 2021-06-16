@@ -17,7 +17,14 @@
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
         <div class="text-h4">{{ content.translatedName }}</div>
-        <q-btn class="full-width" size="lg" rounded color="cyan-10" icon="volume_off" />
+        <q-btn
+          class="full-width"
+          size="lg"
+          rounded
+          color="cyan-10"
+          icon="volume_off"
+          @click="playAudio(content.audio)"
+        />
       </q-card-actions>
     </q-card>
   </div>
@@ -36,7 +43,7 @@ export default class LearnCard extends Vue {
           name: 'BIRD',
           translatedName: 'Papanok',
           img: 'bird.png',
-          audio: ''
+          audio: 'broom.wav'
         },
         {
           name: 'CHICKEN',
@@ -46,19 +53,19 @@ export default class LearnCard extends Vue {
         },
         {
           name: 'CAT',
-          translatedName: `Bedong`,
+          translatedName: 'Bedong',
           img: 'cat.png',
           audio: ''
         },
         {
           name: 'FISH',
-          translatedName: `Seda`,
+          translatedName: 'Seda',
           img: 'fish.png',
           audio: ''
         },
         {
           name: 'COW',
-          translatedName: `Sape`,
+          translatedName: 'Sape',
           img: 'cow.png',
           audio: ''
         }
@@ -92,7 +99,7 @@ export default class LearnCard extends Vue {
         },
         {
           name: 'GREEN',
-          translatedName: `Gadong`,
+          translatedName: 'Gadong',
           img: 'green.png',
           audio: ''
         }
@@ -114,19 +121,19 @@ export default class LearnCard extends Vue {
         },
         {
           name: 'THREE',
-          translatedName: `Telo`,
+          translatedName: 'Telo',
           img: 'three.png',
           audio: ''
         },
         {
           name: 'FOUR',
-          translatedName: `Pat`,
+          translatedName: 'Pat',
           img: 'four.png',
           audio: ''
         },
         {
           name: 'FIVE',
-          translatedName: `Lima`,
+          translatedName: 'Lima',
           img: 'five.png',
           audio: ''
         }
@@ -165,7 +172,7 @@ export default class LearnCard extends Vue {
           audio: ''
         }
       ]
-    },
+    }
   ];
 
   // Your local data for storing DB datas
@@ -183,12 +190,19 @@ export default class LearnCard extends Vue {
     console.log('contents: ', this.contents, this.$route.params.id);
   }
 
-  fetchContent(): void {
+  fetchContent() {
     this.learnContents.forEach((content: any) => {
+      console.log(content);
       if (content[this.$route.params.id]) {
         this.contents = content[this.$route.params.id];
       }
     });
+  }
+
+  playAudio(base64string) {
+    let audioBase64 = require('src/assets/audio/' + base64string);
+    const audio = new Audio(audioBase64);
+    audio.play();
   }
 }
 </script>
