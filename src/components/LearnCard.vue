@@ -200,7 +200,7 @@ export default class LearnCard extends Vue {
   }
 
   playAudio(base64string) {
-    let audioBase64 = require('src/assets/audio/' + base64string);
+    let audioBase64 = require(`src/assets/audio/${base64string}`);
     const audio = new Audio(audioBase64);
     audio.play();
   }
