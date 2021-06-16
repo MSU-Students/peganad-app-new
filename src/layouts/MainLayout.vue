@@ -41,7 +41,7 @@ export default class MainLayout extends Vue {
   }
 
   onLearnPage() {
-     retun this.$route.path.startsWith('/learn');
+    return this.$route.path == '/learn';
   }
 }
 </script>

@@ -1,23 +1,26 @@
 <template>
   <div class="q-gutter-y-md">
-    <q-card
-      class="my-card text-center bg-yellow-3 q-pt-xs q-ma-md"
-      v-for="(content, index) in contents"
-      :key="index"
-    >
+    <q-card class="my-card " v-for="(content, index) in contents" :key="index">
       <q-card-section>
-        <div class="text-h4">{{ content.name }}</div>
-        <img
-          :src="
-            require(`src/assets/card-content/${$route.params.id}/${content.img}`)
-          "
-          height="250"
-          width="250"
-        />
+        <div class="text-h6">{{ content.name }}</div>
+        <img :src="require(`src/assets/card-content/animals/${content.img}`)" />
+        <div class="text-subtitle2">{{ content.translatedName }}</div>
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
         <div class="text-h4">{{ content.translatedName }}</div>
-        <q-btn class="full-width" size="lg" rounded color="cyan-10" icon="volume_off" />
+        <q-btn
+          class="full-width"
+          size="lg"
+          rounded
+          color="cyan-10"
+          icon="volume_off"
+          :loading="showAudioLoader && index == tappedIndex ? true : false"
+          @click="playAudio(content.audio, index)"
+        >
+          <template v-slot:loading>
+            <q-spinner-audio v-if="showAudioLoader" />
+          </template>
+        </q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -33,34 +36,34 @@ export default class LearnCard extends Vue {
     {
       animal: [
         {
-          name: 'BIRD',
+          name: 'Bird',
           translatedName: 'Papanok',
           img: 'bird.png',
-          audio: ''
+          audio: 'bird.wav'
         },
         {
-          name: 'CHICKEN',
+          name: 'Chicken',
           translatedName: 'Manok',
           img: 'chicken.png',
-          audio: ''
+          audio: 'chicken.wav'
         },
-        {
-          name: 'CAT',
-          translatedName: `Bedong`,
+         {
+          name: 'Cat',
+          translatedName: `B'dung`,
           img: 'cat.png',
-          audio: ''
+          audio: 'cat.wav'
         },
         {
           name: 'FISH',
-          translatedName: `Seda`,
+          translatedName: 'Seda',
           img: 'fish.png',
-          audio: ''
+          audio: 'fish.wav'
         },
         {
           name: 'COW',
-          translatedName: `Sape`,
+          translatedName: 'Sape',
           img: 'cow.png',
-          audio: ''
+          audio: 'cow.wav'
         }
       ]
     },
@@ -70,31 +73,31 @@ export default class LearnCard extends Vue {
           name: 'BLACK',
           translatedName: 'Maitem',
           img: 'black.png',
-          audio: ''
+          audio: 'black.wav'
         },
         {
           name: 'BROWN',
           translatedName: 'Kalopalopa',
           img: 'brown.png',
-          audio: ''
+          audio: 'brown.wav'
         },
         {
           name: 'ORANGE',
           translatedName: 'Korit',
           img: 'orange.png',
-          audio: ''
+          audio: 'orange.wav'
         },
         {
           name: 'RED',
           translatedName: 'Mariga',
           img: 'red.png',
-          audio: ''
+          audio: 'red.wav'
         },
         {
           name: 'GREEN',
-          translatedName: `Gadong`,
+          translatedName: 'Gadong',
           img: 'green.png',
-          audio: ''
+          audio: 'green.wav'
         }
       ]
     },
@@ -104,31 +107,31 @@ export default class LearnCard extends Vue {
           name: 'ONE',
           translatedName: 'Isa',
           img: 'one.png',
-          audio: ''
+          audio: 'one.wav'
         },
         {
           name: 'TWO',
           translatedName: 'Duwa',
           img: 'two.png',
-          audio: ''
+          audio: 'two.wav'
         },
         {
           name: 'THREE',
-          translatedName: `Telo`,
+          translatedName: 'Telo',
           img: 'three.png',
-          audio: ''
+          audio: 'three.wav'
         },
         {
           name: 'FOUR',
-          translatedName: `Pat`,
+          translatedName: 'Pat',
           img: 'four.png',
-          audio: ''
+          audio: 'four.wav'
         },
         {
           name: 'FIVE',
-          translatedName: `Lima`,
+          translatedName: 'Lima',
           img: 'five.png',
-          audio: ''
+          audio: 'five.wav'
         }
       ]
     },
@@ -138,34 +141,34 @@ export default class LearnCard extends Vue {
           name: 'CHAIR',
           translatedName: 'Ontoda',
           img: 'chair.png',
-          audio: ''
+          audio: 'chair.wav'
         },
         {
-          name: 'MIRROR',
-          translatedName: 'Pagalongan',
-          img: 'mirror.png',
-          audio: ''
+          name: 'BROOM',
+          translatedName: 'Paipas',
+          img: 'broom.png',
+          audio: 'broom.wav'
         },
         {
-          name: 'PILLOW',
-          translatedName: 'Olona',
-          img: 'pillow.png',
-          audio: ''
+          name: 'FATHER',
+          translatedName: 'Ama',
+          img: 'father.png',
+          audio: 'father.wav'
         },
         {
-          name: 'PLATE',
-          translatedName: 'Lapad',
-          img: 'plate.png',
-          audio: ''
+          name: 'MOTHER',
+          translatedName: 'Ina',
+          img: 'mother.png',
+          audio: 'mother.wav'
         },
         {
-          name: 'SPOON',
-          translatedName: 'Saridot',
-          img: 'spoon.png',
-          audio: ''
+          name: 'TABLE',
+          translatedName: 'Lamisaan',
+          img: 'table.png',
+          audio: 'table.wav'
         }
       ]
-    },
+    }
   ];
 
   // Your local data for storing DB datas
@@ -178,9 +181,11 @@ export default class LearnCard extends Vue {
     }
   ];
 
+  showAudioLoader = false;
+  tappedIndex = 0;
+
   created() {
     this.fetchContent();
-    console.log('contents: ', this.contents, this.$route.params.id);
   }
 
   fetchContent(): void {
@@ -189,6 +194,15 @@ export default class LearnCard extends Vue {
         this.contents = content[this.$route.params.id];
       }
     });
+  }
+
+  async playAudio(base64string: string, index: number) {
+    let audioBase64 = require(`src/assets/audio/${base64string}`);
+    const audio = new Audio(audioBase64);
+    await audio.play();
+    this.showAudioLoader = true;
+    this.tappedIndex = index;
+    audio.onended = () => (this.showAudioLoader = false);
   }
 }
 </script>
