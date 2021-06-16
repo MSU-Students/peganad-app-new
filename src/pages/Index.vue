@@ -16,7 +16,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="my-card text-white bg-blue text-white q-pa-md">
+      <q-card class="my-card text-black bg-green-2 text-white q-pa-md">
         <q-card-section>
           <div class="text-h5">Gitagita Tano!</div>
           <div class="text-h5">Game</div>

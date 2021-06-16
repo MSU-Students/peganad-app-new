@@ -2,6 +2,7 @@ import { RouteConfig } from 'vue-router';
 import MainLayout from 'layouts/MainLayout.vue';
 import Index from 'pages/Index.vue';
 import Learn from 'pages/Learn.vue';
+import LearnContent from 'pages/LearnPageContent.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -9,7 +10,8 @@ const routes: RouteConfig[] = [
     component: MainLayout,
     children: [
       { path: '', component: Index },
-      { path: 'learn', component: Learn }
+      { path: 'learn', component: Learn },
+      { path: 'learn/:id', component: LearnContent }
     ]
   },
 
