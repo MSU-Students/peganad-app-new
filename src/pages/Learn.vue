@@ -1,40 +1,40 @@
 <template>
-  <q-page class="bg-pink q-pa-md">
+  <q-page class="bg-pink-2 q-pa-md">
     <div class="sub-header-container q-mt-am">
       <div class="flex flex-center text-h2" style="height: 250px">
-        <span class="text-h3 text-white">Ready To Learn?</span>
+        <span class="text-h3 text-black">Ready To Learn?</span>
       </div>
     </div>
     <div class="row q-col-gutter-md">
       <div class="col-6">
-        <q-card class="my-card" @click="() => $router.replace('/learn/animal')">
-          <img src="~assets/design/animals.png" />
+        <q-card class="card bg-deep-purple-5" @click="() => $router.replace('/learn/animal')">
+          <img class="card-img" src="~assets/design/animals.png" />
           <q-card-section>
-            <div class="text-h6 text-center">Animals</div>
+            <div class="text-h6 text-center text-white">Animals</div>
           </q-card-section>
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="my-card" @click="() => $router.replace('/learn/color')">
-          <img src="~assets/design/colors.png" />
+        <q-card class="card bg-green-5" @click="() => $router.replace('/learn/color')">
+          <img class="card-img" src="~assets/design/colors.png" />
           <q-card-section>
-            <div class="text-h6 text-center">Colors</div>
+            <div class="text-h6 text-center text-white">Colors</div>
           </q-card-section>
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="my-card" @click="() => $router.replace('/learn/number')">
-          <img src="~assets/design/numbers.png" />
+        <q-card class="card bg-blue-5" @click="() => $router.replace('/learn/number')">
+          <img class="card-img" src="~assets/design/numbers.png" />
           <q-card-section>
-            <div class="text-h6 text-center">Numbers</div>
+            <div class="text-h6 text-center text-white">Numbers</div>
           </q-card-section>
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="my-card" @click="() => $router.replace('/learn/word')">
-          <img src="~assets/design/words.png" />
+        <q-card class="card bg-orange-5" @click="() => $router.replace('/learn/word')">
+          <img  class="card-img" src="~assets/design/words.png" />
           <q-card-section>
-            <div class="text-h6 text-center">Words</div>
+            <div class="text-h6 text-center text-white">Words</div>
           </q-card-section>
         </q-card>
       </div>
@@ -48,9 +48,13 @@ export default {};
 
 <style scoped>
 .sub-header-container {
-  background: url('../assets/design/study1.png');
+  background: url("../assets/design/study1.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;
+}
+
+.card-img {
+  padding: 10px;
 }
 </style>

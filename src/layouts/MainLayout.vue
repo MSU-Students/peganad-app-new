@@ -3,10 +3,20 @@
     <q-header :class="headerColor()">
       <q-toolbar
         v-if="
-          $route.path == '/learn' || $route.path == `/learn/${$route.params.id}`
+          ['/learn', `/learn/${$route.params.id}`].find(p => p == $route.path)
         "
       >
-        <q-btn flat round icon="arrow_back" :to="$route.path == '/learn' ? '/': '/learn'" />
+        <q-btn
+          flat
+          round
+          icon="arrow_back"
+          :to="$route.path == '/learn' ? '/' : '/learn'"
+        />
+        <q-toolbar-title
+          v-if="$route.path == `/learn/${$route.params.id}`"
+          class="text-capitalize absolute-center"
+          >Learn {{ $route.params.id }}</q-toolbar-title
+        >
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -21,13 +31,17 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component({})
 export default class MainLayout extends Vue {
   headerColor() {
-    if (this.$route.path == '/learn') {
-      return 'bg-pink';
+    if (this.onLearnPage()) {
+      return 'bg-pink-2';
     } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
-      return 'bg-purple';
+      return 'bg-info';
     } else {
       return 'bg-white';
     }
+  }
+
+  onLearnPage() {
+    return this.$route.path == '/learn';
   }
 }
 </script>

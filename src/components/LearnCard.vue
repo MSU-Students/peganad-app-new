@@ -6,8 +6,21 @@
         <img :src="require(`src/assets/card-content/animals/${content.img}`)" />
         <div class="text-subtitle2">{{ content.translatedName }}</div>
       </q-card-section>
-      <q-card-actions align="center">
-        <q-btn rounded color="primary" label="Play Audio" icon="speaker" />
+      <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
+        <div class="text-h4">{{ content.translatedName }}</div>
+        <q-btn
+          class="full-width"
+          size="lg"
+          rounded
+          color="cyan-10"
+          icon="volume_off"
+          :loading="showAudioLoader && index == tappedIndex ? true : false"
+          @click="playAudio(content.audio, index)"
+        >
+          <template v-slot:loading>
+            <q-spinner-audio v-if="showAudioLoader" />
+          </template>
+        </q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -26,54 +39,134 @@ export default class LearnCard extends Vue {
           name: 'Bird',
           translatedName: 'Papanok',
           img: 'bird.png',
-          audio: ''
+          audio: 'bird.wav'
         },
         {
           name: 'Chicken',
           translatedName: 'Manok',
           img: 'chicken.png',
-          audio: ''
+          audio: 'chicken.wav'
         },
          {
           name: 'Cat',
           translatedName: `B'dung`,
           img: 'cat.png',
-          audio: ''
+          audio: 'cat.wav'
         },
         {
-         name: 'Fish',
-         translatedName: `S'da`,
-         img: 'fish.png',
-         audio: ''
-         }
+          name: 'FISH',
+          translatedName: 'Seda',
+          img: 'fish.png',
+          audio: 'fish.wav'
+        },
+        {
+          name: 'COW',
+          translatedName: 'Sape',
+          img: 'cow.png',
+          audio: 'cow.wav'
+        }
       ]
     },
     {
       color: [
         {
-          name: 'White',
-          translatedName: 'Maputi',
-          img: '~assets/card-content/animals/bird.png',
-          audio: ''
+          name: 'BLACK',
+          translatedName: 'Maitem',
+          img: 'black.png',
+          audio: 'black.wav'
         },
         {
-          name: 'Chicken',
-          translatedName: 'Manok',
-          img: '',
-          audio: ''
-        },
-         {
-          name: 'Chicken',
-          translatedName: 'Manok',
-          img: '',
-          audio: ''
+          name: 'BROWN',
+          translatedName: 'Kalopalopa',
+          img: 'brown.png',
+          audio: 'brown.wav'
         },
         {
-         name: 'Horse',
-         translatedName: 'Koda',
-         img: '',
-         audio: ''
-         }
+          name: 'ORANGE',
+          translatedName: 'Korit',
+          img: 'orange.png',
+          audio: 'orange.wav'
+        },
+        {
+          name: 'RED',
+          translatedName: 'Mariga',
+          img: 'red.png',
+          audio: 'red.wav'
+        },
+        {
+          name: 'GREEN',
+          translatedName: 'Gadong',
+          img: 'green.png',
+          audio: 'green.wav'
+        }
+      ]
+    },
+    {
+      number: [
+        {
+          name: 'ONE',
+          translatedName: 'Isa',
+          img: 'one.png',
+          audio: 'one.wav'
+        },
+        {
+          name: 'TWO',
+          translatedName: 'Duwa',
+          img: 'two.png',
+          audio: 'two.wav'
+        },
+        {
+          name: 'THREE',
+          translatedName: 'Telo',
+          img: 'three.png',
+          audio: 'three.wav'
+        },
+        {
+          name: 'FOUR',
+          translatedName: 'Pat',
+          img: 'four.png',
+          audio: 'four.wav'
+        },
+        {
+          name: 'FIVE',
+          translatedName: 'Lima',
+          img: 'five.png',
+          audio: 'five.wav'
+        }
+      ]
+    },
+    {
+      word: [
+        {
+          name: 'CHAIR',
+          translatedName: 'Ontoda',
+          img: 'chair.png',
+          audio: 'chair.wav'
+        },
+        {
+          name: 'BROOM',
+          translatedName: 'Paipas',
+          img: 'broom.png',
+          audio: 'broom.wav'
+        },
+        {
+          name: 'FATHER',
+          translatedName: 'Ama',
+          img: 'father.png',
+          audio: 'father.wav'
+        },
+        {
+          name: 'MOTHER',
+          translatedName: 'Ina',
+          img: 'mother.png',
+          audio: 'mother.wav'
+        },
+        {
+          name: 'TABLE',
+          translatedName: 'Lamisaan',
+          img: 'table.png',
+          audio: 'table.wav'
+        }
       ]
     }
   ];
@@ -88,6 +181,9 @@ export default class LearnCard extends Vue {
     }
   ];
 
+  showAudioLoader = false;
+  tappedIndex = 0;
+
   created() {
     this.fetchContent();
   }
@@ -98,6 +194,15 @@ export default class LearnCard extends Vue {
         this.contents = content[this.$route.params.id];
       }
     });
+  }
+
+  async playAudio(base64string: string, index: number) {
+    let audioBase64 = require(`src/assets/audio/${base64string}`);
+    const audio = new Audio(audioBase64);
+    await audio.play();
+    this.showAudioLoader = true;
+    this.tappedIndex = index;
+    audio.onended = () => (this.showAudioLoader = false);
   }
 }
 </script>
