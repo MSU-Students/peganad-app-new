@@ -1,10 +1,13 @@
 <template>
   <div class="q-gutter-y-md">
     <q-card class="my-card " v-for="(content, index) in contents" :key="index">
-      <q-card-section>
-        <div class="text-h6">{{ content.name }}</div>
-        <img :src="require(`src/assets/card-content/animals/${content.img}`)" />
-        <div class="text-subtitle2">{{ content.translatedName }}</div>
+      <q-card-section class="text-center bg-yellow-2">
+        <div class="text-h4">{{ content.name }}</div>
+        <img
+          :src="
+            require(`src/assets/card-content/${$route.params.id}/${content.img}`)
+          "
+        />
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
         <div class="text-h4">{{ content.translatedName }}</div>
@@ -28,6 +31,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import helper from '../services/helper';
 
 @Component({})
 export default class LearnCard extends Vue {
@@ -197,12 +201,11 @@ export default class LearnCard extends Vue {
   }
 
   async playAudio(base64string: string, index: number) {
-    let audioBase64 = require(`src/assets/audio/${base64string}`);
-    const audio = new Audio(audioBase64);
-    await audio.play();
+    const audioBase64 = require(`src/assets/audio/${base64string}`);
     this.showAudioLoader = true;
     this.tappedIndex = index;
-    audio.onended = () => (this.showAudioLoader = false);
+    let audio: any = await helper.playAudio(audioBase64);
+    this.showAudioLoader = audio.playEnded;
   }
 }
 </script>
