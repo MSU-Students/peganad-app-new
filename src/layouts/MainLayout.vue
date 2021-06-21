@@ -18,6 +18,18 @@
           >Learn {{ $route.params.id }}</q-toolbar-title
         >
       </q-toolbar>
+      <q-toolbar
+        v-if="
+          ['/game', `/game/${$route.params.id}`].find(p => p == $route.path)
+        "
+      >
+        <q-btn
+          flat
+          round
+          icon="arrow_back"
+          :to="$route.path == '/game' ? '/' : '/game'"
+        />
+      </q-toolbar>
     </q-header>
     <q-page-container>
       <router-view />
@@ -35,6 +47,8 @@ export default class MainLayout extends Vue {
       return 'bg-pink-2';
     } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
       return 'bg-info';
+    } else if (this.onGamePage()) {
+      return 'bg-green-3'
     } else {
       return 'bg-white';
     }
@@ -42,6 +56,10 @@ export default class MainLayout extends Vue {
 
   onLearnPage() {
     return this.$route.path == '/learn';
+  }
+
+  onGamePage() {
+    return this.$route.path == '/game';
   }
 }
 </script>
