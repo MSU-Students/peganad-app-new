@@ -14,7 +14,7 @@
         />
         <q-toolbar-title
           v-if="$route.path == `/learn/${$route.params.id}`"
-          class="text-capitalize absolute-center"
+          class="text-h5 text-weight-bold text-uppercase absolute-center"
           >Learn {{ $route.params.id }}</q-toolbar-title
         >
       </q-toolbar>
