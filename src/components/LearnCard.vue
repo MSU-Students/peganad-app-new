@@ -1,12 +1,14 @@
 <template>
   <div class="q-gutter-y-md">
-    <q-card class="my-card " v-for="(content, index) in contents" :key="index">
-      <q-card-section class="text-center bg-yellow-2">
+    <q-card class="my-card bg-yellow-3 q-pt-xs q-ma-md" v-for="(content, index) in contents" :key="index">
+      <q-card-section class="text-center ">
         <div class="text-h4">{{ content.name }}</div>
         <img
           :src="
             require(`src/assets/card-content/${$route.params.id}/${content.img}`)
           "
+          height="250"
+          width="250"
         />
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
