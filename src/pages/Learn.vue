@@ -7,7 +7,7 @@
     </div>
     <div class="row q-col-gutter-md">
       <div class="col-6">
-        <q-card class="card bg-deep-purple-5" @click="() => $router.replace('/learn/animal')">
+        <q-card class="card bg-deep-purple-5" @click="() => $router.replace('/learn/animals')">
           <img class="card-img" src="~assets/design/animals.png" />
           <q-card-section>
             <div class="text-h6 text-center text-white">Animals</div>
