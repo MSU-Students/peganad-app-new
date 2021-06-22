@@ -31,3 +31,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+firebase.json
