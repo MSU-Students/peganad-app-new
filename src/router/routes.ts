@@ -2,6 +2,7 @@ import { RouteConfig } from 'vue-router';
 import MainLayout from 'layouts/MainLayout.vue';
 import Index from 'pages/Index.vue';
 import Learn from 'pages/Learn.vue';
+import Game from 'pages/Game.vue';
 import LearnContent from 'pages/LearnPageContent.vue';
 
 const routes: RouteConfig[] = [
@@ -11,6 +12,7 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', component: Index },
       { path: 'learn', component: Learn },
+      { path: 'game', component: Game },
       { path: 'learn/:id', component: LearnContent }
     ]
   },
