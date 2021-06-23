@@ -1,6 +1,10 @@
 <template>
   <div class="q-gutter-y-md">
-    <q-card class="my-card bg-yellow-3 q-pt-xs q-ma-md" v-for="(content, index) in contents" :key="index">
+    <q-card
+      class="my-card bg-yellow-3 q-pt-xs q-ma-md"
+      v-for="(content, index) in contents"
+      :key="index"
+    >
       <q-card-section class="text-center ">
         <div class="text-h4">{{ content.name }}</div>
         <img
@@ -33,14 +37,19 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import helper from '../services/helper';
+import helper from 'src/services/helper';
+import firestore from 'src/services/firestore';
+
+interface IContent {
+  [key: string]: string;
+}
 
 @Component({})
 export default class LearnCard extends Vue {
   // sample JSON data from DB
   learnContents = [
     {
-      animal: [
+      animals: [
         {
           name: 'Bird',
           translatedName: 'Papanok',
@@ -53,9 +62,9 @@ export default class LearnCard extends Vue {
           img: 'chicken.png',
           audio: 'chicken.wav'
         },
-         {
+        {
           name: 'Cat',
-          translatedName: `B'dung`,
+          translatedName: 'Bdung',
           img: 'cat.png',
           audio: 'cat.wav'
         },
@@ -178,7 +187,7 @@ export default class LearnCard extends Vue {
   ];
 
   // Your local data for storing DB datas
-  contents = [
+  contents: IContent[] = [
     {
       name: '',
       translatedName: '',
@@ -190,8 +199,10 @@ export default class LearnCard extends Vue {
   showAudioLoader = false;
   tappedIndex = 0;
 
-  created() {
+  async created() {
     this.fetchContent();
+    const res = await firestore.getAnimals();
+    console.log(res);
   }
 
   fetchContent(): void {
