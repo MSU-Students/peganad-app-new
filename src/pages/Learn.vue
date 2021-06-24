@@ -15,7 +15,7 @@
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="card bg-green-5" @click="() => $router.replace('/learn/color')">
+        <q-card class="card bg-green-5" @click="() => $router.replace('/learn/colors')">
           <img class="card-img" src="~assets/design/colors.png" />
           <q-card-section>
             <div class="text-h6 text-center text-white">Colors</div>
@@ -23,7 +23,7 @@
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="card bg-blue-5" @click="() => $router.replace('/learn/number')">
+        <q-card class="card bg-blue-5" @click="() => $router.replace('/learn/numbers')">
           <img class="card-img" src="~assets/design/numbers.png" />
           <q-card-section>
             <div class="text-h6 text-center text-white">Numbers</div>
@@ -31,7 +31,7 @@
         </q-card>
       </div>
       <div class="col-6">
-        <q-card class="card bg-orange-5" @click="() => $router.replace('/learn/word')">
+        <q-card class="card bg-orange-5" @click="() => $router.replace('/learn/words')">
           <img  class="card-img" src="~assets/design/words.png" />
           <q-card-section>
             <div class="text-h6 text-center text-white">Words</div>
