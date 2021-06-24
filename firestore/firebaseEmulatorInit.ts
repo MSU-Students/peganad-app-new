@@ -6,8 +6,10 @@ firebase.initializeApp(firebaseConfig);
 require('firebase/auth');
 
 const localFirestore = firebase.firestore();
+const localStorange = firebase.storage();
 if (location.hostname === 'localhost') {
   localFirestore.useEmulator('localhost', 9099);
+  localStorange.useEmulator('localhost', 9098);
 }
 
 // cloud firestore db collection query
