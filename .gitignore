@@ -2,6 +2,17 @@
 .thumbs.db
 node_modules
 
+# Firebase/Firestore Related
+/peganad-emulator-data
+start-emulator.sh
+ui-debug.log
+firestore.rules
+firestore.indexes.json
+firestore-debug.log
+firebase.json
+firebase-debug.log
+storage.rules
+
 # Quasar core related directories
 .quasar
 /dist
@@ -32,6 +43,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 firebase-debug.log
-firestore-debug.log
-ui-debug.log
 firebase.json
