@@ -48,7 +48,7 @@ export default {};
 
 <style scoped>
 .sub-header-container {
-  background: url("../assets/design/game1.png");
+  background: url("../../assets/design/game1.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;
