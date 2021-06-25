@@ -1,15 +1,17 @@
 {
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
   "emulators": {
     "firestore": {
       "port": 9099
+    },
+    "storage": {
+      "port": 9098
     },
     "ui": {
       "enabled": true,
       "port": 9090
     }
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
