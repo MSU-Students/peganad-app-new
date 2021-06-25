@@ -1,9 +1,15 @@
+// import {
+//   animalsQuery,
+//   colorsQuery,
+//   numbersQuery,
+//   wordsQuery
+// } from 'app/firestore/firebaseInit';
 import {
   animalsQuery,
   colorsQuery,
   numbersQuery,
   wordsQuery
-} from 'src/firestore/firebaseInit';
+} from 'app/firestore/firebaseEmulatorInit';
 interface IContent {
   [key: string]: string;
 }
