@@ -1,9 +1,10 @@
 import { RouteConfig } from 'vue-router';
 import MainLayout from 'layouts/MainLayout.vue';
 import Index from 'pages/Index.vue';
-import Learn from 'pages/Learn.vue';
-import Game from 'pages/Game.vue';
-import LearnContent from 'pages/LearnPageContent.vue';
+import Learn from 'src/pages/learn/Learn.vue';
+import Game from 'src/pages/game/Game.vue';
+import LearnContent from 'src/pages/learn/LearnPageContent.vue';
+import GameContent from 'pages/game/GamePageContent.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -13,7 +14,8 @@ const routes: RouteConfig[] = [
       { path: '', component: Index },
       { path: 'learn', component: Learn },
       { path: 'game', component: Game },
-      { path: 'learn/:id', component: LearnContent }
+      { path: 'learn/:id', name: "learn-content", component: LearnContent },
+      { path: 'game/:id', name: "game-content", component: GameContent }
     ]
   },
 

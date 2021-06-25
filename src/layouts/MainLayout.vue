@@ -9,7 +9,7 @@
         <q-btn
           flat
           round
-          icon="arrow_back"
+          :icon="$route.name == 'learn-content' ? 'close' : 'arrow_back'"
           :to="$route.path == '/learn' ? '/' : '/learn'"
         />
         <q-toolbar-title
@@ -23,12 +23,19 @@
           ['/game', `/game/${$route.params.id}`].find(p => p == $route.path)
         "
       >
-        <q-btn
+         <q-btn
           flat
           round
-          icon="arrow_back"
+          :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
           :to="$route.path == '/game' ? '/' : '/game'"
         />
+        <!-- <q-space />
+        <q-btn
+          v-if="$route.path == '/game'"
+          flat
+          round
+          icon="emoji_events"
+        /> -->
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -48,7 +55,9 @@ export default class MainLayout extends Vue {
     } else if (this.$route.path == `/learn/${this.$route.params.id}`) {
       return 'bg-info';
     } else if (this.onGamePage()) {
-      return 'bg-green-3'
+      return 'bg-green-3';
+     } else if (this.$route.path == `/game/${this.$route.params.id}`) {
+      return 'bg-purple-3';
     } else {
       return 'bg-white';
     }
