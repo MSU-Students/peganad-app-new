@@ -210,10 +210,9 @@ export default class LearnCard extends Vue {
   }
 
   async playAudio(base64string: string, index: number) {
-    const audioBase64 = require(`src/assets/audio/${base64string}`);
     this.showAudioLoader = true;
     this.tappedIndex = index;
-    let audio: any = await helper.playAudio(audioBase64);
+    let audio: any = await helper.playAudio(base64string);
     this.showAudioLoader = audio.playEnded;
   }
 }
