@@ -8,9 +8,7 @@
       <q-card-section class="text-center ">
         <div class="text-h4">{{ content.name }}</div>
         <img
-          :src="
-            require(`src/assets/card-content/${$route.params.id}/${content.img}`)
-          "
+          :src="content.img"
           height="250"
           width="250"
         />
@@ -47,170 +45,168 @@ interface IContent {
 @Component({})
 export default class LearnCard extends Vue {
   // sample JSON data from DB
-  learnContents = [
-    {
-      animals: [
-        {
-          name: 'Bird',
-          translatedName: 'Papanok',
-          img: 'bird.png',
-          audio: 'bird.wav'
-        },
-        {
-          name: 'Chicken',
-          translatedName: 'Manok',
-          img: 'chicken.png',
-          audio: 'chicken.wav'
-        },
-        {
-          name: 'Cat',
-          translatedName: 'Bdung',
-          img: 'cat.png',
-          audio: 'cat.wav'
-        },
-        {
-          name: 'FISH',
-          translatedName: 'Seda',
-          img: 'fish.png',
-          audio: 'fish.wav'
-        },
-        {
-          name: 'COW',
-          translatedName: 'Sape',
-          img: 'cow.png',
-          audio: 'cow.wav'
-        }
-      ]
-    },
-    {
-      color: [
-        {
-          name: 'BLACK',
-          translatedName: 'Maitem',
-          img: 'black.png',
-          audio: 'black.wav'
-        },
-        {
-          name: 'BROWN',
-          translatedName: 'Kalopalopa',
-          img: 'brown.png',
-          audio: 'brown.wav'
-        },
-        {
-          name: 'ORANGE',
-          translatedName: 'Korit',
-          img: 'orange.png',
-          audio: 'orange.wav'
-        },
-        {
-          name: 'RED',
-          translatedName: 'Mariga',
-          img: 'red.png',
-          audio: 'red.wav'
-        },
-        {
-          name: 'GREEN',
-          translatedName: 'Gadong',
-          img: 'green.png',
-          audio: 'green.wav'
-        }
-      ]
-    },
-    {
-      number: [
-        {
-          name: 'ONE',
-          translatedName: 'Isa',
-          img: 'one.png',
-          audio: 'one.wav'
-        },
-        {
-          name: 'TWO',
-          translatedName: 'Duwa',
-          img: 'two.png',
-          audio: 'two.wav'
-        },
-        {
-          name: 'THREE',
-          translatedName: 'Telo',
-          img: 'three.png',
-          audio: 'three.wav'
-        },
-        {
-          name: 'FOUR',
-          translatedName: 'Pat',
-          img: 'four.png',
-          audio: 'four.wav'
-        },
-        {
-          name: 'FIVE',
-          translatedName: 'Lima',
-          img: 'five.png',
-          audio: 'five.wav'
-        }
-      ]
-    },
-    {
-      word: [
-        {
-          name: 'CHAIR',
-          translatedName: 'Ontoda',
-          img: 'chair.png',
-          audio: 'chair.wav'
-        },
-        {
-          name: 'BROOM',
-          translatedName: 'Paipas',
-          img: 'broom.png',
-          audio: 'broom.wav'
-        },
-        {
-          name: 'FATHER',
-          translatedName: 'Ama',
-          img: 'father.png',
-          audio: 'father.wav'
-        },
-        {
-          name: 'MOTHER',
-          translatedName: 'Ina',
-          img: 'mother.png',
-          audio: 'mother.wav'
-        },
-        {
-          name: 'TABLE',
-          translatedName: 'Lamisaan',
-          img: 'table.png',
-          audio: 'table.wav'
-        }
-      ]
-    }
-  ];
+  // learnContents = [
+  //   {
+  //     animals: [
+  //       {
+  //         name: 'Bird',
+  //         translatedName: 'Papanok',
+  //         img: 'bird.png',
+  //         audio: 'bird.wav'
+  //       },
+  //       {
+  //         name: 'Chicken',
+  //         translatedName: 'Manok',
+  //         img: 'chicken.png',
+  //         audio: 'chicken.wav'
+  //       },
+  //       {
+  //         name: 'Cat',
+  //         translatedName: 'Bdung',
+  //         img: 'cat.png',
+  //         audio: 'cat.wav'
+  //       },
+  //       {
+  //         name: 'FISH',
+  //         translatedName: 'Seda',
+  //         img: 'fish.png',
+  //         audio: 'fish.wav'
+  //       },
+  //       {
+  //         name: 'COW',
+  //         translatedName: 'Sape',
+  //         img: 'cow.png',
+  //         audio: 'cow.wav'
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     color: [
+  //       {
+  //         name: 'BLACK',
+  //         translatedName: 'Maitem',
+  //         img: 'black.png',
+  //         audio: 'black.wav'
+  //       },
+  //       {
+  //         name: 'BROWN',
+  //         translatedName: 'Kalopalopa',
+  //         img: 'brown.png',
+  //         audio: 'brown.wav'
+  //       },
+  //       {
+  //         name: 'ORANGE',
+  //         translatedName: 'Korit',
+  //         img: 'orange.png',
+  //         audio: 'orange.wav'
+  //       },
+  //       {
+  //         name: 'RED',
+  //         translatedName: 'Mariga',
+  //         img: 'red.png',
+  //         audio: 'red.wav'
+  //       },
+  //       {
+  //         name: 'GREEN',
+  //         translatedName: 'Gadong',
+  //         img: 'green.png',
+  //         audio: 'green.wav'
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     number: [
+  //       {
+  //         name: 'ONE',
+  //         translatedName: 'Isa',
+  //         img: 'one.png',
+  //         audio: 'one.wav'
+  //       },
+  //       {
+  //         name: 'TWO',
+  //         translatedName: 'Duwa',
+  //         img: 'two.png',
+  //         audio: 'two.wav'
+  //       },
+  //       {
+  //         name: 'THREE',
+  //         translatedName: 'Telo',
+  //         img: 'three.png',
+  //         audio: 'three.wav'
+  //       },
+  //       {
+  //         name: 'FOUR',
+  //         translatedName: 'Pat',
+  //         img: 'four.png',
+  //         audio: 'four.wav'
+  //       },
+  //       {
+  //         name: 'FIVE',
+  //         translatedName: 'Lima',
+  //         img: 'five.png',
+  //         audio: 'five.wav'
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     word: [
+  //       {
+  //         name: 'CHAIR',
+  //         translatedName: 'Ontoda',
+  //         img: 'chair.png',
+  //         audio: 'chair.wav'
+  //       },
+  //       {
+  //         name: 'BROOM',
+  //         translatedName: 'Paipas',
+  //         img: 'broom.png',
+  //         audio: 'broom.wav'
+  //       },
+  //       {
+  //         name: 'FATHER',
+  //         translatedName: 'Ama',
+  //         img: 'father.png',
+  //         audio: 'father.wav'
+  //       },
+  //       {
+  //         name: 'MOTHER',
+  //         translatedName: 'Ina',
+  //         img: 'mother.png',
+  //         audio: 'mother.wav'
+  //       },
+  //       {
+  //         name: 'TABLE',
+  //         translatedName: 'Lamisaan',
+  //         img: 'table.png',
+  //         audio: 'table.wav'
+  //       }
+  //     ]
+  //   }
+  // ];
 
   // Your local data for storing DB datas
-  contents: IContent[] = [
-    {
-      name: '',
-      translatedName: '',
-      img: '',
-      audio: ''
-    }
-  ];
-
+  contents: IContent[] = [];
   showAudioLoader = false;
   tappedIndex = 0;
 
   async created() {
-    this.fetchContent();
-    const res = await firestore.getAnimals();
-    console.log(res);
+    await this.fetchContent();
   }
 
-  fetchContent(): void {
-    this.learnContents.forEach((content: any) => {
-      if (content[this.$route.params.id]) {
-        this.contents = content[this.$route.params.id];
-      }
-    });
+  async fetchContent(): Promise<void> {
+    const animals = await firestore.getAnimals();
+    const colors = await firestore.getColors();
+    const numbers = await firestore.getNumbers();
+    const words = await firestore.getWords();
+    if (animals.length != 0 && this.$route.params.id == 'animals') {
+      this.contents.push(...animals);
+    } else if (colors.length != 0 && this.$route.params.id == 'colors') {
+      this.contents.push(...colors);
+    } else if (numbers.length != 0 && this.$route.params.id == 'numbers') {
+      this.contents.push(...numbers);
+    } else if (words.length != 0 && this.$route.params.id == 'words') {
+      this.contents.push(...words);
+    }
   }
 
   async playAudio(base64string: string, index: number) {
