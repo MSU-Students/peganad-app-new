@@ -7,11 +7,7 @@
     >
       <q-card-section class="text-center ">
         <div class="text-h4">{{ content.name }}</div>
-        <img
-          :src="content.img"
-          height="250"
-          width="250"
-        />
+        <img :src="content.img" height="250" width="250" />
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
         <div class="text-h4">{{ content.translatedName }}</div>
