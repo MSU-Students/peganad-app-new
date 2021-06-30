@@ -14,8 +14,8 @@ const routes: RouteConfig[] = [
       { path: '', component: Index },
       { path: 'learn', component: Learn },
       { path: 'game', component: Game },
-      { path: 'learn/:id', name: "learn-content", component: LearnContent },
-      { path: 'game/:id', name: "game-content", component: GameContent }
+      { path: 'learn/:id', name: 'learn-content', component: LearnContent },
+      { path: 'game/:id', name: 'game-content', component: GameContent }
     ]
   },
 
