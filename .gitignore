@@ -3,7 +3,7 @@
 node_modules
 
 # Firebase/Firestore Related
-/peganad-emulator-data
+/peganad-emulator-data/*
 start-emulator.sh
 ui-debug.log
 firestore.rules
@@ -42,3 +42,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+firebase-debug.log
+firebase-export-1625016778375yKqhyM/firestore_export/firestore_export.overall_export_metadata
+firebase-export-1625016778375yKqhyM/firestore_export/all_namespaces/all_kinds/all_namespaces_all_kinds.export_metadata
+firebase-export-1625016778375yKqhyM/firestore_export/all_namespaces/all_kinds/output-0

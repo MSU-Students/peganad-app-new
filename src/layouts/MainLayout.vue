@@ -29,6 +29,12 @@
           :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
           :to="$route.path == '/game' ? '/' : '/game'"
         />
+         <q-toolbar-title
+          v-if="$route.path == `/game/${$route.params.id}`"
+          class="text-h5 text-weight-bold text-uppercase absolute-center"
+          >Play {{ $route.params.id }}</q-toolbar-title
+        >
+      </q-toolbar>
         <!-- <q-space />
         <q-btn
           v-if="$route.path == '/game'"
