@@ -35,14 +35,6 @@
           >Play {{ $route.params.id }}</q-toolbar-title
         >
       </q-toolbar>
-        <!-- <q-space />
-        <q-btn
-          v-if="$route.path == '/game'"
-          flat
-          round
-          icon="emoji_events"
-        /> -->
-      </q-toolbar>
     </q-header>
     <q-page-container>
       <router-view />
@@ -63,7 +55,7 @@ export default class MainLayout extends Vue {
     } else if (this.onGamePage()) {
       return 'bg-green-3';
      } else if (this.$route.path == `/game/${this.$route.params.id}`) {
-      return 'bg-purple-3';
+      return 'bg-info';
     } else {
       return 'bg-white';
     }
