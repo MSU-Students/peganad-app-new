@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-lg bg-purple-3 flex flex-center">
+  <q-page class="q-px-lg bg-info flex flex-center">
     <GameCard />
   </q-page>
 </template>
