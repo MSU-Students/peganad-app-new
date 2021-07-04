@@ -30,7 +30,7 @@
       </q-card-section>
       <q-card-actions class="row q-col-gutter-md q-pa-lg">
         <div
-          v-for="(answer, index) in game['gameAnswers']"
+          v-for="(answer, index) in gameAnswer['answers']"
           :key="index"
           class="col-6"
         >
@@ -40,20 +40,13 @@
             rounded
             push
             :text-color="
-              index == game['selectedAnswer'].index ||
-              (index == game['selectedAnswer'].index &&
-                uiPrefrence['isAnswerCheck'])
-                ? 'white'
-                : game.selectedBtnTextColor
+              index == game['selectedAnswer'].index ? 'white' : 'white'
             "
             :color="
-              index == game['selectedAnswer'].index ||
-              (index == game['selectedAnswer'].index &&
-                uiPrefrence['isAnswerCheck'])
-                ? 'purple-10'
-                : game.selectedBtnColor
+              index == game['selectedAnswer'].index ? 'purple-10' : 'grey'
             "
             :label="answer"
+            :disable="uiPrefrence.isAnswerCheck"
             @click="selectAnswer({ index, answer })"
           />
         </div>
@@ -85,52 +78,43 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import firestore from 'src/services/firestore';
+import { IContent } from 'src/interfaces/common-interface';
+import {
+  IGame,
+  IGameAnswer,
+  IUiPreference
+} from 'src/interfaces/game-interface';
+import { mapState, mapActions } from 'vuex';
 
-interface IContent {
-  name: string;
-  translatedName: string;
-  img: string;
-  audio: string;
-}
-
-interface IGame {
-  contentPosition: number;
-  currentTime: number;
-  timer: number;
-  questionCounter: number;
-  score: number;
-  correctAnswer: string;
-  selectedAnswer: {
-    index: number | undefined;
-    answer: string;
-  };
-  gameAnswers: string[];
-}
-
-interface IUiPreference {
-  isAnswerSelect: boolean;
-  isAnswerCheck: boolean;
-  selectedBtnColor: string;
-  selectedBtnTextColor: string;
-}
-
-@Component({})
+@Component({
+  computed: {
+    ...mapState('common', ['contents']),
+    ...mapState('game', ['displayContents', 'gameAnswer'])
+  },
+  methods: {
+    ...mapActions('game', [
+      'paginateContents',
+      'generateRandomAnswer',
+      'changeContentPosition'
+    ])
+  }
+})
 export default class GameCard extends Vue {
-  storeContents: IContent[] = [];
-  displayContents: IContent[] = [];
+  contents!: IContent[];
+  displayContents!: IContent[];
+  gameAnswer!: IGameAnswer;
+  paginateContents!: (contents: IContent[]) => void;
+  generateRandomAnswer!: (contents: IContent[]) => void;
+  changeContentPosition!: (position: number) => void;
   game: IGame = {
-    contentPosition: 1,
     currentTime: 0,
     timer: 10,
     questionCounter: 1,
     score: 0,
-    correctAnswer: '',
     selectedAnswer: {
       index: undefined,
       answer: ''
-    },
-    gameAnswers: []
+    }
   };
   uiPrefrence: IUiPreference = {
     isAnswerSelect: false,
@@ -139,72 +123,27 @@ export default class GameCard extends Vue {
     selectedBtnTextColor: ''
   };
 
-  async created() {
-    await this.fetchContent();
+  created() {
+    this.showContent();
   }
 
-  async fetchContent(): Promise<void> {
-    const animals = await firestore.getAnimals();
-    const colors = await firestore.getColors();
-    const numbers = await firestore.getNumbers();
-    const words = await firestore.getWords();
-    if (animals.length != 0 && this.$route.params.id == 'animals') {
-      this.storeContents.push(...animals);
-    } else if (colors.length != 0 && this.$route.params.id == 'colors') {
-      this.storeContents.push(...colors);
-    } else if (numbers.length != 0 && this.$route.params.id == 'numbers') {
-      this.storeContents.push(...numbers);
-    } else if (words.length != 0 && this.$route.params.id == 'words') {
-      this.storeContents.push(...words);
-    }
-    this.paginateContents();
-    this.generateRandomAnswer();
+  showContent(): void {
+    this.paginate();
+    this.generateAnswers();
   }
 
-  paginateContents(): void {
-    let extractContent = this.storeContents;
-    const paginate = (array: [], index: number, size: number) => {
-      // transform values
-      index = typeof index == 'string' ? Math.abs(parseInt(index)) : index;
-      index = index > 0 ? index - 1 : index;
-      size = typeof size == 'string' ? parseInt(size) : size;
-      size = size < 1 ? 1 : size;
-      // filter
-      return [
-        ...extractContent.filter((value, n) => {
-          return n >= index * size && n < (index + 1) * size;
-        })
-      ];
-    };
-    if (this.game.contentPosition <= extractContent.length) {
-      let transform = paginate(extractContent, this.game.contentPosition, 1);
-      this.displayContents = transform;
-      console.log(transform);
-    }
+  paginate(): void {
+    this.paginateContents(this.contents);
     this.startTimer();
   }
 
-  generateRandomAnswer(): void {
-    const extractContent = this.storeContents;
-    let answersArr = [];
-
-    extractContent.forEach((content: IContent) => {
-      answersArr.unshift(content.translatedName);
-    });
-
-    this.game.correctAnswer = this.displayContents[0].translatedName; // store correct answer
-    let newAnsArr: IContent[] = answersArr.filter(
-      item => item != this.game.correctAnswer
-    ); // Remove answer in array
-    newAnsArr.length = 3; // Limit length
-    newAnsArr.unshift(this.game.correctAnswer); // Add answer array
-    newAnsArr.sort(() => Math.random() - 0.5); // random the new elements
-    this.game.gameAnswers = newAnsArr;
-    this.game.selectedBtnColor = 'grey';
-    this.game.btnTextColor = 'white';
+  generateAnswers(): void {
+    this.generateRandomAnswer(this.contents);
+    this.uiPrefrence.selectedBtnColor = 'grey';
+    this.uiPrefrence.selectedBtnTextColor = 'white';
   }
 
-  selectAnswer(selectedOptions: { [key: string]: string }): void {
+  selectAnswer(selectedOptions: { [key: string]: any }): void {
     this.game.selectedAnswer.index = selectedOptions.index;
     this.game.selectedAnswer.answer = selectedOptions.answer;
     this.uiPrefrence.isAnswerSelect = true;
@@ -216,7 +155,7 @@ export default class GameCard extends Vue {
     this.uiPrefrence.isAnswerCheck = true;
     this.uiPrefrence.selectedBtnColor = 'purple-10';
     this.uiPrefrence.selectedBtnTextColor = 'white';
-    if (this.game.selectedAnswer.answer == this.game.correctAnswer) {
+    if (this.game.selectedAnswer.answer == this.gameAnswer.correctAnswer) {
       let score = 0;
       score = this.game.timer + 10;
       this.game.score += score;
@@ -231,13 +170,12 @@ export default class GameCard extends Vue {
   continueAnswering(): void {
     this.game.timer = 10;
     this.game.questionCounter += 1;
-    this.game.contentPosition += 1;
     this.game.selectedAnswer.index = undefined;
     this.game.selectedAnswer.answer = '';
     this.uiPrefrence.isAnswerSelect = false;
     this.uiPrefrence.isAnswerCheck = false;
-    this.paginateContents();
-    this.generateRandomAnswer();
+    this.changeContentPosition(1);
+    this.showContent();
     clearTimeout(this.game.currentTime);
   }
 
@@ -252,7 +190,7 @@ export default class GameCard extends Vue {
         this.game.timer = 10;
       }
       this.countDownTimer();
-    }, 1000);
+    }, 1000) as any;
   }
 }
 </script>
