@@ -11,7 +11,10 @@ import {
   wordsQuery
 } from 'app/firestore/firebaseEmulatorInit';
 interface IContent {
-  [key: string]: string;
+  name: string;
+  translatedName: string;
+  img: string;
+  audio: string;
 }
 
 class Firestore {
@@ -20,7 +23,7 @@ class Firestore {
     return new Promise(resolve => {
       const contentArr: IContent[] = [];
       result.forEach(r => {
-        contentArr.push(r.data());
+        contentArr.push(r.data() as any);
       });
       resolve(contentArr);
     });
@@ -31,7 +34,7 @@ class Firestore {
     return new Promise(resolve => {
       const contentArr: IContent[] = [];
       result.forEach(r => {
-        contentArr.push(r.data());
+        contentArr.push(r.data() as any);
       });
       resolve(contentArr);
     });
@@ -42,7 +45,7 @@ class Firestore {
     return new Promise(resolve => {
       const contentArr: IContent[] = [];
       result.forEach(r => {
-        contentArr.push(r.data());
+        contentArr.push(r.data() as any);
       });
       resolve(contentArr);
     });
@@ -53,7 +56,7 @@ class Firestore {
     return new Promise(resolve => {
       const contentArr: IContent[] = [];
       result.forEach(r => {
-        contentArr.push(r.data());
+        contentArr.push(r.data() as any);
       });
       resolve(contentArr);
     });
