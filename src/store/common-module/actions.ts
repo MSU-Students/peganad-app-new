@@ -1,4 +1,4 @@
-import firestore from 'src/services/firestore';
+import firestoreService from 'src/services/firestore.service';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { CommonStateInterface } from './state';
@@ -6,10 +6,10 @@ import { CommonStateInterface } from './state';
 
 const actions: ActionTree<CommonStateInterface, StateInterface> = {
   async appendContent(context, routeParam): Promise<void> {
-    const animals = await firestore.getAnimals();
-    const colors = await firestore.getColors();
-    const numbers = await firestore.getNumbers();
-    const words = await firestore.getWords();
+    const animals = await firestoreService.getAnimals();
+    const colors = await firestoreService.getColors();
+    const numbers = await firestoreService.getNumbers();
+    const words = await firestoreService.getWords();
     if (animals.length != 0 && routeParam == 'animals') {
       context.commit('appendContent', animals);
     } else if (colors.length != 0 && routeParam == 'colors') {
