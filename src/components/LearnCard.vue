@@ -33,7 +33,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { IContent } from 'src/interfaces/common-interface';
-import helper from 'src/services/helper';
+import helperService from 'src/services/helper.service';
 
 import { mapState, mapActions } from 'vuex';
 
@@ -63,7 +63,7 @@ export default class LearnCard extends Vue {
   async playAudio(base64string: string, index: number) {
     this.showAudioLoader = true;
     this.tappedIndex = index;
-    let audio: any = await helper.playAudio(base64string);
+    let audio: any = await helperService.playAudio(base64string);
     this.showAudioLoader = audio.playEnded;
   }
 }
