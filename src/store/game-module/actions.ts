@@ -3,7 +3,6 @@ import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { GameStateInterface } from './state';
 
-const transform = undefined;
 const actions: ActionTree<GameStateInterface, StateInterface> = {
 
   paginateContents(context, contents: IContent[]): void {
