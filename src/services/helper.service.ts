@@ -1,4 +1,4 @@
-class Helper {
+class HelperService {
   async playAudio(audioBase64: string) {
     const audio = new Audio(audioBase64);
     await audio.play();
@@ -12,5 +12,5 @@ class Helper {
   }
 }
 
-const helper = new Helper();
-export default helper;
+const helperService = new HelperService();
+export default helperService;
