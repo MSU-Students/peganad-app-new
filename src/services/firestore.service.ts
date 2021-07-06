@@ -17,7 +17,7 @@ interface IContent {
   audio: string;
 }
 
-class Firestore {
+class FirestoreService {
   async getAnimals(): Promise<IContent[]> {
     const result = await animalsQuery.get();
     return new Promise(resolve => {
@@ -63,5 +63,5 @@ class Firestore {
   }
 }
 
-const fireStore = new Firestore();
-export default fireStore;
+const fireStoreService = new FirestoreService();
+export default fireStoreService;
