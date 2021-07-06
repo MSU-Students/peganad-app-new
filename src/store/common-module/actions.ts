@@ -1,14 +1,18 @@
+import contentService from 'src/services/content.service';
 import firestoreService from 'src/services/firestore.service';
+import { localbaseService } from 'src/services/localbase.service';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { CommonStateInterface } from './state';
 
 const actions: ActionTree<CommonStateInterface, StateInterface> = {
-  async appendContent(context, routeParam): Promise<void> {
-    const categoryContent = await firestoreService.getContents(routeParam);
-    if (categoryContent.length != 0 && routeParam == 'animals') {
-      context.commit('appendContent', categoryContent);
-    }
+  async appendContent(context, category: string): Promise<void> {
+    const categoryContent = await firestoreService.getContents(category);
+    const content = await contentService.appendContent(
+      categoryContent,
+      category
+    );
+    context.commit('appendContent', content);
   }
 };
 

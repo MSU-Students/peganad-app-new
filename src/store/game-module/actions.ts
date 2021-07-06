@@ -10,7 +10,9 @@ const actions: ActionTree<GameStateInterface, StateInterface> = {
       contents,
       context.state.contentPosition
     );
-    context.commit('storeCorrectAnswer', transform[0].translatedName);
+    if (transform.length != 0) {
+      context.commit('storeCorrectAnswer', transform[0].translatedName);
+    }
     context.commit('paginateContents', transform);
   },
 

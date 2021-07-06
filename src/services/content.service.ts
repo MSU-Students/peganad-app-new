@@ -1,12 +1,20 @@
 import { localbaseService } from 'src/services/localbase.service';
 import firestore from 'src/services/firestore.service';
 import { IContent } from 'src/interfaces/common-interface';
+import fireStoreService from 'src/services/firestore.service';
 
 class ContentService {
-  async appendContent(content: string): Promise<void> {}
-
-  checkLocalContent() {}
-  checkNewContent() {}
+  async appendContent(
+    content: IContent[],
+    category: string
+  ): Promise<IContent[]> {
+    let localContent = await localbaseService.getAnimals(category);
+    if (!localContent || localContent.length != content.length) {
+      let result = await localbaseService.setContent(category, content);
+      return result;
+    }
+    return localContent;
+  }
 
   async paginateContents(
     contents: IContent[],
@@ -30,6 +38,8 @@ class ContentService {
       if (contentPosition <= extractContent.length) {
         const transform = paginate(extractContent, contentPosition, 1);
         resolve(transform);
+      } else {
+        resolve([]);
       }
     });
   }
