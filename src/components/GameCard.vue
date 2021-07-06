@@ -103,8 +103,8 @@ export default class GameCard extends Vue {
   contents!: IContent[];
   displayContents!: IContent[];
   gameAnswer!: IGameAnswer;
-  paginateContents!: (contents: IContent[]) => void;
-  generateRandomAnswer!: (contents: IContent[]) => void;
+  paginateContents!: (contents: IContent[]) => Promise<void>;
+  generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
   changeContentPosition!: (position: number) => void;
   game: IGame = {
     currentTime: 0,
@@ -123,22 +123,22 @@ export default class GameCard extends Vue {
     selectedBtnTextColor: ''
   };
 
-  created() {
-    this.showContent();
+  async created() {
+    await this.showContent();
   }
 
-  showContent(): void {
-    this.paginate();
-    this.generateAnswers();
+  async showContent(): Promise<void> {
+    await this.paginate();
+    await this.generateAnswers();
   }
 
-  paginate(): void {
-    this.paginateContents(this.contents);
+  async paginate(): Promise<void> {
+    await this.paginateContents(this.contents);
     this.startTimer();
   }
 
-  generateAnswers(): void {
-    this.generateRandomAnswer(this.contents);
+  async generateAnswers(): Promise<void> {
+    await this.generateRandomAnswer(this.contents);
     this.uiPrefrence.selectedBtnColor = 'grey';
     this.uiPrefrence.selectedBtnTextColor = 'white';
   }
@@ -167,7 +167,7 @@ export default class GameCard extends Vue {
     }
   }
 
-  continueAnswering(): void {
+  async continueAnswering(): Promise<void> {
     this.game.timer = 10;
     this.game.questionCounter += 1;
     this.game.selectedAnswer.index = undefined;
@@ -175,7 +175,7 @@ export default class GameCard extends Vue {
     this.uiPrefrence.isAnswerSelect = false;
     this.uiPrefrence.isAnswerCheck = false;
     this.changeContentPosition(1);
-    this.showContent();
+    await this.showContent();
     clearTimeout(this.game.currentTime);
   }
 
