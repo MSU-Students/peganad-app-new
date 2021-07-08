@@ -15,6 +15,7 @@ export interface IGameAnswer {
 }
 
 export interface IUiPreference {
+  showScoreDialog: boolean;
   isAnswerSelect: boolean;
   isAnswerCheck: boolean;
   selectedBtnColor: string;

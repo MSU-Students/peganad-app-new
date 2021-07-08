@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-px-lg bg-info flex flex-center">
-    <GameCard v-if="!isPageLoading" />
-    <PageLodaer v-else />
+    <PageLoader v-if="isPageLoading" />
+    <GameCard v-else />
   </q-page>
 </template>
 
@@ -9,12 +9,12 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { mapState, mapActions } from 'vuex';
 import GameCard from 'components/GameCard.vue';
-import PageLodaer from 'components/PageLoader.vue';
+import PageLoader from 'components/PageLoader.vue';
 
 @Component({
   components: {
     GameCard,
-    PageLodaer
+    PageLoader
   },
   computed: {
     ...mapState('ui', ['isPageLoading'])

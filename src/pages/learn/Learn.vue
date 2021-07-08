@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-pink-2 q-pa-md">
+  <q-page class="bg-pink-2 q-pa-md text-center">
     <div class="sub-header-container q-mt-am">
       <div class="flex flex-center text-h2" style="height: 250px">
         <span class="text-h3 text-black">Ready To Learn?</span>

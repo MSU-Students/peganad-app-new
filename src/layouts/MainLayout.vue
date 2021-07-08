@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout view="lHh lpr lFf">
     <q-header :class="headerColor()">
       <q-toolbar
         v-if="
@@ -23,17 +23,22 @@
           ['/game', `/game/${$route.params.id}`].find(p => p == $route.path)
         "
       >
-         <q-btn
+        <q-btn
           flat
           round
           :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
           :to="$route.path == '/game' ? '/' : '/game'"
         />
-         <q-toolbar-title
+        <q-toolbar-title
           v-if="$route.path == `/game/${$route.params.id}`"
           class="text-h5 text-weight-bold text-uppercase absolute-center"
           >Play {{ $route.params.id }}</q-toolbar-title
         >
+        <q-space ></q-space>
+        <q-btn 
+        flat
+        round
+        v-if="$route.path == '/game'" icon="emoji_events" />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -54,7 +59,7 @@ export default class MainLayout extends Vue {
       return 'bg-info';
     } else if (this.onGamePage()) {
       return 'bg-green-3';
-     } else if (this.$route.path == `/game/${this.$route.params.id}`) {
+    } else if (this.$route.path == `/game/${this.$route.params.id}`) {
       return 'bg-info';
     } else {
       return 'bg-white';

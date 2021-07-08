@@ -1,6 +1,7 @@
 <template>
   <div class="q-gutter-y-sm text-h5 text-bold text-center text-white">
     <p>What is the Meranaw meaning of this {{ $route.params.id }}?</p>
+    <q-btn label="Show Score" @click="uiPrefrence.showScoreDialog = true" />
     <q-card
       v-for="(content, index) in displayContents"
       :key="index"
@@ -53,7 +54,7 @@
       </q-card-actions>
     </q-card>
     <q-btn
-      class="full-width q-mt-md"
+      class="full-width q-mt-md" 
       size="lg"
       rounded
       push
@@ -73,6 +74,53 @@
           : continueAnswering()
       "
     />
+    <q-dialog v-model="uiPrefrence.showScoreDialog" persistent @hide="showScoreDialog = false">
+      <q-card>
+        <q-card-section class="text-h4 text-center">
+          <span class="q-ml-sm"
+            >Congratulations!</span
+          >
+        </q-card-section>
+         <q-card class="my-card text-center q-ma-lg bg-red-2">
+        <q-card-section>
+          <div class="text-h5 q-pb-md">Words You Got Right: 5/10</div>
+           <div class="text-h5 q-pb-md">SCORE: 50</div>
+          <div class="text-h6">enter your name</div>
+          <div>
+            <q-btn rounded color="grey" label="SAVE"></q-btn>
+          </div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section class="text-center">
+          <div class="text-h5">New Personal Best!</div>
+        </q-card-section>
+      </q-card>  
+        <q-card-section class="q-gutter-md q-pt-xl">
+      <div>
+        <q-btn
+          class="full-width"
+          size="lg"
+          rounded
+          color="grey"
+          label="Play Again?"
+        >
+        </q-btn>
+      </div>
+       <div>
+        <q-btn
+          class="full-width"
+          size="lg"
+          rounded
+          color="grey"
+          label="Exit Quiz"
+        >
+        </q-btn>
+      </div>
+      </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -117,6 +165,7 @@ export default class GameCard extends Vue {
     }
   };
   uiPrefrence: IUiPreference = {
+    showScoreDialog: false,
     isAnswerSelect: false,
     isAnswerCheck: false,
     selectedBtnColor: '',

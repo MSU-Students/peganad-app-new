@@ -3,10 +3,10 @@ import Vuex from 'vuex';
 
 import common from './common-module';
 import { CommonStateInterface } from './common-module/state';
-import ui from './ui-module';
-import { UiStateInterface } from './ui-module/state';
 import game from './game-module';
 import { GameStateInterface } from './game-module/state';
+import ui from './ui-module';
+import { UiStateInterface } from './ui-module/state';
 
 /*
  * If not building with SSR mode, you can
@@ -16,8 +16,8 @@ import { GameStateInterface } from './game-module/state';
 export interface StateInterface {
   // Define your own store structure, using submodules if needed
   commonInterface: CommonStateInterface;
-  uiInterface: UiStateInterface;
   gameInterface: GameStateInterface;
+  uiInterface: UiStateInterface;
 }
 
 export default store(function({ Vue }) {
@@ -26,8 +26,8 @@ export default store(function({ Vue }) {
   const Store = new Vuex.Store<StateInterface>({
     modules: {
       common,
-      ui,
-      game
+      game,
+      ui
     },
 
     // enable strict mode (adds overhead!)

@@ -5,6 +5,7 @@ import Learn from 'src/pages/learn/Learn.vue';
 import Game from 'src/pages/game/Game.vue';
 import LearnContent from 'src/pages/learn/LearnPageContent.vue';
 import GameContent from 'pages/game/GamePageContent.vue';
+import ScoreBoard from 'src/pages/ScoreBoard.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -15,7 +16,8 @@ const routes: RouteConfig[] = [
       { path: 'learn', component: Learn },
       { path: 'game', component: Game },
       { path: 'learn/:id', name: 'learn-content', component: LearnContent },
-      { path: 'game/:id', name: 'game-content', component: GameContent }
+      { path: 'game/:id', name: 'game-content', component: GameContent },
+      { path: 'score', component: ScoreBoard}
     ]
   },
 
