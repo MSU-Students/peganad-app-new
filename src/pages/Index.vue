@@ -12,18 +12,20 @@
           <div class="text-h5">Learn</div>
         </q-card-section>
         <q-card-section class="text-center">
-          <q-img src="~assets/design/study.png" width="200px"></q-img>
+          <q-img src="~assets/design/study.png" width="200px" basic></q-img>
         </q-card-section>
       </q-card>
 
-      <q-card class="my-card text-black bg-green-2 text-white q-pa-md"
-       @click="() => $router.replace('/game')">
+      <q-card
+        class="my-card text-black bg-green-2 text-white q-pa-md"
+        @click="() => $router.replace('/game')"
+      >
         <q-card-section>
           <div class="text-h5">Gitagita Tano!</div>
           <div class="text-h5">Game</div>
         </q-card-section>
         <q-card-section class="text-center">
-          <q-img src="~assets/design/game.png" width="200px"></q-img>
+          <q-img src="~assets/design/game.png" width="200px" basic></q-img>
         </q-card-section>
       </q-card>
     </div>
@@ -31,9 +33,7 @@
 </template>
 
 <script>
-export default {
- 
-};
+export default {};
 </script>
 
 <style scoped></style>

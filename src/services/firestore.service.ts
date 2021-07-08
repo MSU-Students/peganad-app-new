@@ -1,15 +1,7 @@
 // import {
-//   animalsQuery,
-//   colorsQuery,
-//   numbersQuery,
-//   wordsQuery
+//   firestore
 // } from 'app/firestore/firebaseInit';
-import {
-  animalsQuery,
-  colorsQuery,
-  numbersQuery,
-  wordsQuery
-} from 'app/firestore/firebaseEmulatorInit';
+import { localFirestore } from 'app/firestore/firebaseEmulatorInit';
 interface IContent {
   name: string;
   translatedName: string;
@@ -18,45 +10,12 @@ interface IContent {
 }
 
 class FirestoreService {
-  async getAnimals(): Promise<IContent[]> {
-    const result = await animalsQuery.get();
+  async getContents(params: string): Promise<IContent[]> {
+    const result = await localFirestore.collection(params).get();
     return new Promise(resolve => {
-      const contentArr: IContent[] = [];
+      const contentArr: any[] = [];
       result.forEach(r => {
-        contentArr.push(r.data() as any);
-      });
-      resolve(contentArr);
-    });
-  }
-
-  async getColors(): Promise<IContent[]> {
-    const result = await colorsQuery.get();
-    return new Promise(resolve => {
-      const contentArr: IContent[] = [];
-      result.forEach(r => {
-        contentArr.push(r.data() as any);
-      });
-      resolve(contentArr);
-    });
-  }
-
-  async getNumbers(): Promise<IContent[]> {
-    const result = await numbersQuery.get();
-    return new Promise(resolve => {
-      const contentArr: IContent[] = [];
-      result.forEach(r => {
-        contentArr.push(r.data() as any);
-      });
-      resolve(contentArr);
-    });
-  }
-
-  async getWords(): Promise<IContent[]> {
-    const result = await wordsQuery.get();
-    return new Promise(resolve => {
-      const contentArr: IContent[] = [];
-      result.forEach(r => {
-        contentArr.push(r.data() as any);
+        contentArr.push(r.data());
       });
       resolve(contentArr);
     });

@@ -1,7 +1,8 @@
 <template>
   <q-page class="q-px-lg bg-info flex flex-center">
-    <PageLoader v-if="isPageLoading" />
-    <GameCard v-else />
+    <GameCard v-if="!isPageLoading && contents.length != 0" />
+    <PageLodaer v-else-if="isPageLoading" />
+    <NoContent v-else-if="contents.length == 0" />
   </q-page>
 </template>
 
@@ -9,15 +10,19 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { mapState, mapActions } from 'vuex';
 import GameCard from 'components/GameCard.vue';
-import PageLoader from 'components/PageLoader.vue';
+import PageLodaer from 'components/PageLoader.vue';
+import NoContent from 'components/NoContent.vue';
+import { IContent } from 'src/interfaces/common-interface';
 
 @Component({
   components: {
     GameCard,
-    PageLoader
+    PageLodaer,
+    NoContent
   },
   computed: {
-    ...mapState('ui', ['isPageLoading'])
+    ...mapState('ui', ['isPageLoading']),
+    ...mapState('common', ['contents'])
   },
   methods: {
     ...mapActions('common', ['appendContent']),
@@ -26,9 +31,9 @@ import PageLoader from 'components/PageLoader.vue';
 })
 export default class LearnPageContent extends Vue {
   isPageLoading!: boolean;
+  contents!: IContent[];
   appendContent!: (routeParam: string) => Promise<void>;
   showLoading!: (isLoad: boolean) => void;
-
   async created() {
     await this.fetchContent();
   }
