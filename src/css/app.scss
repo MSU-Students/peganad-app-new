@@ -6,24 +6,31 @@
     src: url('./fonts/Poppins-SemiBold.ttf');
     src: url('./fonts/Poppins-Medium.ttf');
   }
-  
+
   .p-bold {
     font-family: 'custom-font', 'Poppins-Bold';
   }
-  
+
   .p-medium {
     font-family: 'custom-font', 'Poppins-SemiBold';
   }
-  
+
   .p-normal {
     font-family: 'custom-font', 'Poppins-Medium';
   }
-  
+
   .q-card {
     border-radius: 20px 20px 20px 20px;
   }
-  
+
   .q-page {
     font-family: 'custom-font', 'Poppins-Bold';
   }
-  
+
+  .q-dialog {
+    font-family: 'custom-font', 'Poppins-Bold';
+  }
+
+  .__border-radius {
+    border-radius: 10px 10px 10px 10px !important;
+  }
