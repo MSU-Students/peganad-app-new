@@ -1,20 +1,15 @@
 import firebase from 'firebase/app';
 import firebaseConfig from './firebaseConfig';
 import 'firebase/firestore';
+import 'firebase/storage';
 firebase.initializeApp(firebaseConfig);
 require('firebase/auth');
 
-// utils
 const firestore = firebase.firestore();
-// const auth = firebase.auth();
-// const firebaseStorage = firebase.storage();
-// const firebaseDB = firebase.database();
+const storage = firebase.storage();
+if (location.hostname === 'localhost') {
+  firestore.useEmulator('localhost', 9012);
+  storage.useEmulator('localhost', 9011);
+}
 
-// cloud firestore db collection query
-// const animalsQuery = firestoreDB.collection('animals');
-// const colorsQuery = firestoreDB.collection('colors');
-// const numbersQuery = firestoreDB.collection('numbers');
-// const wordsQuery = firestoreDB.collection('words');
-
-// export utils/refs
 export { firestore };

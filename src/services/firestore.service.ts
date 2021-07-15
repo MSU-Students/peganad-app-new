@@ -1,7 +1,7 @@
 // import {
 //   firestore
 // } from 'app/firestore/firebaseInit';
-import { localFirestore } from 'app/firestore/firebaseEmulatorInit';
+import { firestore } from 'app/firestore/firebaseInit';
 interface IContent {
   name: string;
   translatedName: string;
@@ -11,7 +11,7 @@ interface IContent {
 
 class FirestoreService {
   async getContents(params: string): Promise<IContent[]> {
-    const result = await localFirestore.collection(params).get();
+    const result = await firestore.collection(params).get();
     return new Promise(resolve => {
       const contentArr: any[] = [];
       result.forEach(r => {
