@@ -1,4 +1,5 @@
 import { IContent } from 'src/interfaces/common-interface';
+import { IGame } from 'src/interfaces/game-interface';
 import contentService from 'src/services/content.service';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
@@ -12,8 +13,8 @@ const actions: ActionTree<GameStateInterface, StateInterface> = {
     );
     if (transform.length != 0) {
       context.commit('storeCorrectAnswer', transform[0].translatedName);
+      context.commit('paginateContents', transform);
     }
-    context.commit('paginateContents', transform);
   },
 
   async generateRandomAnswer(context, contents: IContent[]): Promise<void> {
@@ -26,6 +27,14 @@ const actions: ActionTree<GameStateInterface, StateInterface> = {
 
   changeContentPosition(context, position: number): void {
     context.commit('changeContentPosition', position);
+  },
+
+  savePreferences(context, preference: IGame): void {
+    context.commit('savePreferences', preference)
+  },
+
+  resetContentPosition(context): void {
+    context.commit('resetContentPosition');
   }
 };
 

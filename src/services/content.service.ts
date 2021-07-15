@@ -5,15 +5,19 @@ import fireStoreService from 'src/services/firestore.service';
 
 class ContentService {
   async appendContent(
-    content: IContent[],
+    onlineContent: IContent[],
     category: string
   ): Promise<IContent[]> {
-    let localContent = await localbaseService.getAnimals(category);
-    if (!localContent || localContent.length != content.length) {
-      let result = await localbaseService.setContent(category, content);
+    let localContent = await localbaseService.getContents(category);
+    if (
+      !localContent ||
+      localContent.length != 0 ||
+      (localContent.length != onlineContent.length && navigator.onLine)
+    ) {
+      let result = await localbaseService.setContent(category, onlineContent);
       return result;
     }
-    return localContent;
+    return localContent.sort(() => Math.random() - 0.5);
   }
 
   async paginateContents(
@@ -56,10 +60,9 @@ class ContentService {
         answersArr.unshift(content.translatedName as any);
       });
 
+      answersArr.sort(() => Math.random() - 0.5); // random the new elements
       const correctAnswer = correctAns;
-      const newAnsArr = answersArr.filter(
-        item => item.translatedName != correctAnswer
-      ); // Remove answer in array
+      const newAnsArr = answersArr.filter((item: any) => item != correctAnswer); // Remove answer in array
       newAnsArr.length = 3; // Limit length
       newAnsArr.unshift(correctAnswer as any); // Add answer array
       newAnsArr.sort(() => Math.random() - 0.5); // random the new elements
