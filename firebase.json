@@ -1,14 +1,14 @@
 {
   "emulators": {
     "firestore": {
-      "port": 9099
+      "port": 9012
     },
     "storage": {
-      "port": 9098
+      "port": 9011
     },
     "ui": {
       "enabled": true,
-      "port": 9090
+      "port": 9010
     }
   },
   "storage": {
