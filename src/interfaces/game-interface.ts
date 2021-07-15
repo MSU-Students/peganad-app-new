@@ -2,6 +2,7 @@ export interface IGame {
   currentTime: number;
   timer: number;
   questionCounter: number;
+  correctAnswer: number;
   score: number;
   selectedAnswer: {
     index: number | undefined;
@@ -15,9 +16,10 @@ export interface IGameAnswer {
 }
 
 export interface IUiPreference {
-  showScoreDialog: boolean;
   isAnswerSelect: boolean;
   isAnswerCheck: boolean;
+  isWrong: boolean;
   selectedBtnColor: string;
   selectedBtnTextColor: string;
+  counterTextColor: string;
 }

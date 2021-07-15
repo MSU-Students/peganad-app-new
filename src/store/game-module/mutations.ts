@@ -16,6 +16,14 @@ const mutation: MutationTree<GameStateInterface> = {
 
   changeContentPosition(state, position) {
     state.contentPosition += position;
+  },
+
+  savePreferences(state, gamePreference) {
+    state.gamePreference = gamePreference;
+  },
+
+  resetContentPosition(state) {
+    state.contentPosition = 1;
   }
 };
 
