@@ -80,8 +80,11 @@
           <span class="q-ml-sm"
             >Congratulations!</span
           >
+          <q-card-section class="text-center">
+          <div class="text-h5">New Personal Best!</div>
         </q-card-section>
-         <q-card class="my-card text-center q-ma-lg bg-red-2">
+        </q-card-section>
+         <q-card class="text-center q-ma-lg bg-red-2">
         <q-card-section>
           <div class="text-h5 q-pb-md">Words You Got Right: 5/10</div>
            <div class="text-h5 q-pb-md">SCORE: 50</div>
@@ -89,12 +92,6 @@
           <div>
             <q-btn rounded color="grey" label="SAVE"></q-btn>
           </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section class="text-center">
-          <div class="text-h5">New Personal Best!</div>
         </q-card-section>
       </q-card>  
         <q-card-section class="q-gutter-md q-pt-xl">
