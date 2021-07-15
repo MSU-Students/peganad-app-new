@@ -1,147 +1,139 @@
 <template>
-  <q-page class="bg-green-3 q-pa-md text-center">
-    <div class="sub-header-container q-mt-am">
-      <div class="flex flex-center text-h2" style="height: 250px">
-        <span class="text-h3 text-black">Game Best Score</span>
-      </div>
-    </div>
-     <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  <q-page>
+    <q-card class="__border-radius">
+      <q-card-section class="text-h4 text-center">
+        <span v-if="isNewHighScore" class="q-ml-sm">Congratulations!</span>
+        <span v-else class="q-ml-sm">Thank you for playing!</span>
+      </q-card-section>
+      <q-card class="__border-radius text-center q-ma-lg bg-red-2">
+        <q-card-section>
+          <div class="text-h5 q-pb-md">
+            Words You Got Right: {{ gamePreference.correctAnswer }}/{{ contents.length }}
+          </div>
+          <div class="text-h5">SCORE: {{ gamePreference.score }}</div>
+          <div v-if="isNewHighScore" class="q-py-md">
+            <div class="text-subtitl1 text-grey-8">Enter your name</div>
+            <q-input v-model="playerName" outlined dense bg-color="white" />
+          </div>
+          <div class="text-h5 q-pt-md" v-else>
+            <div>Player: {{ playerName }}</div>
           </div>
         </q-card-section>
 
-        <q-card-section class="col-5 flex flex-center">
-          <q-img
-            class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
+        <q-separator />
+
+        <q-card-section class="text-center">
+          <span v-if="isNewHighScore" class="text-h5"
+            >New Personal Best!</span
+          >
+          <span v-else class="text-h5">Personal Best!</span>
         </q-card-section>
+      </q-card>
+      <q-card-section class="q-gutter-md q-pt-xl">
+        <div>
+          <q-btn
+            class="full-width"
+            size="lg"
+            rounded
+            color="grey"
+            :label="isNewHighScore ? 'Save' : 'Play Again?'"
+            @click="isNewHighScore ? savePlayerStat() : playAgain()"
+          >
+          </q-btn>
+        </div>
+        <div>
+          <q-btn
+            class="full-width"
+            size="lg"
+            rounded
+            color="grey"
+            label="Exit Quiz"
+            to="/game"
+          >
+          </q-btn>
+        </div>
       </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat round icon="event" />
-        <q-btn flat>
-          7:30PM
-        </q-btn>
-        <q-btn flat color="primary">
-          Reserve
-        </q-btn>
-      </q-card-actions>
     </q-card>
-     </div>
-      <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </div>
-        </q-card-section>
-
-        <q-card-section class="col-5 flex flex-center">
-          <q-img
-            class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-        </q-card-section>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat round icon="event" />
-        <q-btn flat>
-          7:30PM
-        </q-btn>
-        <q-btn flat color="primary">
-          Reserve
-        </q-btn>
-      </q-card-actions>
-    </q-card>
-     </div>
-      <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </div>
-        </q-card-section>
-
-        <q-card-section class="col-5 flex flex-center">
-          <q-img
-            class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-        </q-card-section>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat round icon="event" />
-        <q-btn flat>
-          7:30PM
-        </q-btn>
-        <q-btn flat color="primary">
-          Reserve
-        </q-btn>
-      </q-card-actions>
-    </q-card>
-     </div>
-      <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </div>
-        </q-card-section>
-
-        <q-card-section class="col-5 flex flex-center">
-          <q-img
-            class="rounded-borders"
-            src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-        </q-card-section>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat round icon="event" />
-        <q-btn flat>
-          7:30PM
-        </q-btn>
-        <q-btn flat color="primary">
-          Reserve
-        </q-btn>
-      </q-card-actions>
-    </q-card>
-     </div>
   </q-page>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { IContent } from 'src/interfaces/common-interface';
+import { Vue, Component } from 'vue-property-decorator';
+import { mapState, mapActions } from 'vuex';
+import playerService from 'src/services/player.service';
+import { IGame } from 'src/interfaces/game-interface';
+import { IPlayer } from 'src/interfaces/player.interface';
 
+@Component({
+  computed: {
+    ...mapState('ui', ['isScoreDialog']),
+    ...mapState('common', ['contents']),
+    ...mapState('game', ['gamePreference'])
+  },
+  methods: {
+    ...mapActions('game', ['paginateContents', 'generateRandomAnswer']),
+    ...mapActions('common', ['appendContent'])
+  }
+})
+export default class ScoreDialog extends Vue {
+  isScoreDialog!: boolean;
+  contents!: IContent[];
+  gamePreference!: IGame;
+  appendContent!: (routeParam: string) => Promise<void>;
+  paginateContents!: (contents: IContent[]) => Promise<void>;
+  generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
+  show = false;
+  isNewHighScore = false;
+  playerName = '';
+
+  async created() {
+    this.show = this.isScoreDialog;
+    await this.checkPlayersStat();
+  }
+
+  async playAgain() {
+    await this.$router.replace(`/game/${this.$route.params.id}`);
+  }
+
+  async showContent(): Promise<void> {
+    await this.paginate();
+    await this.generateAnswers();
+  }
+
+  async paginate(): Promise<void> {
+    await this.paginateContents(this.contents);
+  }
+
+  async generateAnswers(): Promise<void> {
+    await this.generateRandomAnswer(this.contents);
+  }
+
+  async checkPlayersStat(): Promise<void> {
+    console.log('scoreboard: ', this.gamePreference.score);
+    const status = await playerService.checkPlayersStat(
+      `score-${this.$route.params.id}`,
+      this.gamePreference.score
+    );
+    if (status) {
+      this.isNewHighScore = true;
+    } else {
+      this.isNewHighScore = false;
+    }
+  }
+
+  async savePlayerStat() {
+    const playerStats: IPlayer = {
+      score: this.gamePreference.score,
+      player: this.playerName
+    };
+    await playerService.savePlayerStat(
+      `score-${this.$route.params.id}`,
+      playerStats
+    );
+    this.isNewHighScore = false;
+  }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
