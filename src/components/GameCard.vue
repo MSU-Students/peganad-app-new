@@ -1,35 +1,56 @@
 <template>
   <div class="q-gutter-y-sm text-h5 text-bold text-center text-white">
     <p>What is the Meranaw meaning of this {{ $route.params.id }}?</p>
-    <q-btn label="Show Score" @click="uiPrefrence.showScoreDialog = true" />
     <q-card
       v-for="(content, index) in displayContents"
       :key="index"
       class="my-card bg-purple-3 text-center"
     >
-      <q-card-section>
+      <q-card-section class="q-pa-sm">
         <div class="text-h6 row text-center">
           <div class="col-4">
-            <div class="text-subtitle1">Question</div>
-            <div class="text-h5">{{ game.questionCounter }}/10</div>
+            <div class="text-subtitle2">Question</div>
+            <div class="text-h6">
+              {{ game.questionCounter }}
+              /{{ contents.length }}
+            </div>
           </div>
           <div class="col-4">
-            <div class="text-subtitle1">Time</div>
-            <div class="text-h5">:{{ game.timer }}</div>
+            <div class="text-subtitle2">Time</div>
+            <div class="text-h6">
+              :<span :class="uiPrefrence.counterTextColor">
+                {{ game.timer }}
+              </span>
+            </div>
           </div>
           <div class="col-4">
-            <div class="text-subtitle1">Score</div>
-            <div class="text-h5">{{ game.score }}</div>
+            <div class="text-subtitle2">Score</div>
+            <div class="text-h6">{{ game.score }}</div>
           </div>
         </div>
       </q-card-section>
-      <q-card-section>
-        {{ content.name }}
+
+      <q-separator inset color="white" />
+
+      <q-card-section class="text-center q-py-none">
+        <div
+          v-if="uiPrefrence.isWrong"
+          class="__border-radius bg-green text-white q-py-xs q-my-sm"
+        >
+          <div class="q-pa-none text-caption text-capitalize">
+            Correct Answer:
+          </div>
+          {{ gameAnswer.correctAnswer }}
+        </div>
+        <div v-else class="q-py-lg" style="height: 76px">
+          {{ content.name }}
+        </div>
       </q-card-section>
+
       <q-card-section class="text-center bg-white">
         <img :src="content.img" height="250" width="250" />
       </q-card-section>
-      <q-card-actions class="row q-col-gutter-md q-pa-lg">
+      <q-card-actions class="row q-col-gutter-md q-pa-md">
         <div
           v-for="(answer, index) in gameAnswer['answers']"
           :key="index"
@@ -54,7 +75,7 @@
       </q-card-actions>
     </q-card>
     <q-btn
-      class="full-width q-mt-md" 
+      class="full-width q-mt-md"
       size="lg"
       rounded
       push
@@ -74,50 +95,6 @@
           : continueAnswering()
       "
     />
-    <q-dialog v-model="uiPrefrence.showScoreDialog" persistent @hide="showScoreDialog = false">
-      <q-card>
-        <q-card-section class="text-h4 text-center">
-          <span class="q-ml-sm"
-            >Congratulations!</span
-          >
-          <q-card-section class="text-center">
-          <div class="text-h5">New Personal Best!</div>
-        </q-card-section>
-        </q-card-section>
-         <q-card class="text-center q-ma-lg bg-red-2">
-        <q-card-section>
-          <div class="text-h5 q-pb-md">Words You Got Right: 5/10</div>
-           <div class="text-h5 q-pb-md">SCORE: 50</div>
-          <div class="text-h6">enter your name</div>
-          <div>
-            <q-btn rounded color="grey" label="SAVE"></q-btn>
-          </div>
-        </q-card-section>
-      </q-card>  
-        <q-card-section class="q-gutter-md q-pt-xl">
-      <div>
-        <q-btn
-          class="full-width"
-          size="lg"
-          rounded
-          color="grey"
-          label="Play Again?"
-        >
-        </q-btn>
-      </div>
-       <div>
-        <q-btn
-          class="full-width"
-          size="lg"
-          rounded
-          color="grey"
-          label="Exit Quiz"
-        >
-        </q-btn>
-      </div>
-      </q-card-section>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
@@ -130,17 +107,20 @@ import {
   IUiPreference
 } from 'src/interfaces/game-interface';
 import { mapState, mapActions } from 'vuex';
+import helperService from 'src/services/helper.service';
+import { Howl, Howler } from 'howler';
 
 @Component({
   computed: {
     ...mapState('common', ['contents']),
-    ...mapState('game', ['displayContents', 'gameAnswer'])
+    ...mapState('game', ['displayContents', 'gameAnswer', 'contentPosition'])
   },
   methods: {
     ...mapActions('game', [
       'paginateContents',
       'generateRandomAnswer',
-      'changeContentPosition'
+      'changeContentPosition',
+      'savePreferences'
     ])
   }
 })
@@ -148,13 +128,16 @@ export default class GameCard extends Vue {
   contents!: IContent[];
   displayContents!: IContent[];
   gameAnswer!: IGameAnswer;
+  contentPosition!: number;
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
   changeContentPosition!: (position: number) => void;
+  savePreferences!: (save: IGame) => void;
   game: IGame = {
     currentTime: 0,
     timer: 10,
     questionCounter: 1,
+    correctAnswer: 0,
     score: 0,
     selectedAnswer: {
       index: undefined,
@@ -162,11 +145,12 @@ export default class GameCard extends Vue {
     }
   };
   uiPrefrence: IUiPreference = {
-    showScoreDialog: false,
     isAnswerSelect: false,
     isAnswerCheck: false,
+    isWrong: false,
     selectedBtnColor: '',
-    selectedBtnTextColor: ''
+    selectedBtnTextColor: '',
+    counterTextColor: 'text-white'
   };
 
   async created() {
@@ -174,17 +158,9 @@ export default class GameCard extends Vue {
   }
 
   async showContent(): Promise<void> {
-    await this.paginate();
-    await this.generateAnswers();
-  }
-
-  async paginate(): Promise<void> {
     await this.paginateContents(this.contents);
-    this.startTimer();
-  }
-
-  async generateAnswers(): Promise<void> {
     await this.generateRandomAnswer(this.contents);
+    this.startTimer();
     this.uiPrefrence.selectedBtnColor = 'grey';
     this.uiPrefrence.selectedBtnTextColor = 'white';
   }
@@ -197,7 +173,7 @@ export default class GameCard extends Vue {
     this.uiPrefrence.selectedBtnTextColor = 'white';
   }
 
-  checkSelectedAnswer(): void {
+  async checkSelectedAnswer(): Promise<void> {
     this.uiPrefrence.isAnswerCheck = true;
     this.uiPrefrence.selectedBtnColor = 'purple-10';
     this.uiPrefrence.selectedBtnTextColor = 'white';
@@ -205,38 +181,102 @@ export default class GameCard extends Vue {
       let score = 0;
       score = this.game.timer + 10;
       this.game.score += score;
+      this.game.correctAnswer += 1;
       this.uiPrefrence.selectedBtnColor = 'green';
       this.uiPrefrence.selectedBtnTextColor = 'white';
+      this.uiPrefrence.isWrong = false;
+      const audio: HTMLAudioElement = await helperService.playAudio(
+        require('src/assets/game-audio/correct-sound.wav')
+      );
+      await audio.play();
     } else {
       this.uiPrefrence.selectedBtnColor = 'red-5';
       this.uiPrefrence.selectedBtnTextColor = 'white';
+      this.uiPrefrence.isWrong = true;
+      const audio: HTMLAudioElement = await helperService.playAudio(
+        require('src/assets/game-audio/wrong-sound.wav')
+      );
+      await audio.play();
     }
+    clearTimeout(this.game.currentTime);
   }
 
   async continueAnswering(): Promise<void> {
+    if (this.contentPosition < this.contents.length) {
+      this.game.questionCounter += 1;
+      this.changeContentPosition(1);
+    } else if (this.contentPosition == this.contents.length) {
+      this.savePreferences(this.game);
+      await this.$router.replace(`/score/${this.$route.params.id}`);
+      this.resetGamePreference();
+    }
     this.game.timer = 10;
-    this.game.questionCounter += 1;
     this.game.selectedAnswer.index = undefined;
     this.game.selectedAnswer.answer = '';
     this.uiPrefrence.isAnswerSelect = false;
     this.uiPrefrence.isAnswerCheck = false;
-    this.changeContentPosition(1);
+    this.uiPrefrence.isWrong = false;
+    this.uiPrefrence.counterTextColor = 'text-white';
     await this.showContent();
     clearTimeout(this.game.currentTime);
   }
 
-  startTimer(): void {
-    this.countDownTimer();
+  closeGame() {
+    if (this.game.score != 0) {
+    } else {
+    }
   }
 
-  countDownTimer(): void {
+  startTimer(): void {
+    setTimeout(() => {
+      this.countDownTimer();
+    }, 500);
+  }
+
+  countDownTimer() {
     this.game.currentTime = setTimeout(() => {
-      this.game.timer -= 1;
-      if (this.game.timer == 0) {
-        this.game.timer = 10;
+      if (this.game.timer > 0) {
+        this.game.timer -= 1;
+        if (this.game.timer <= 5) {
+          this.uiPrefrence.counterTextColor = 'text-red';
+          const sound = new Howl({
+            src: ['src/assets/game-audio/countdown.wav'],
+            onplayerror: function() {
+              sound.once('unlock', function() {
+                sound.play();
+              });
+            }
+          });
+
+          sound.play();
+        }
+      } else if (this.game.timer == 0) {
+        this.uiPrefrence.selectedBtnColor = 'red-5';
+        this.uiPrefrence.selectedBtnTextColor = 'white';
+        this.uiPrefrence.isAnswerCheck = true;
+        this.uiPrefrence.isAnswerSelect = true;
+        this.uiPrefrence.isWrong = true;
       }
       this.countDownTimer();
     }, 1000) as any;
+  }
+
+  resetGamePreference() {
+    return (this.game = {
+      currentTime: 0,
+      timer: 10,
+      questionCounter: 1,
+      correctAnswer: 0,
+      score: 0,
+      selectedAnswer: {
+        index: undefined,
+        answer: ''
+      }
+    });
+  }
+
+  destroyed() {
+    this.resetGamePreference();
   }
 }
 </script>

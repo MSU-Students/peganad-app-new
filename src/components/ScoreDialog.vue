@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-dialog v-model="show" persistent @hide="hideDialog()">
     <q-card class="__border-radius">
       <q-card-section class="text-h4 text-center">
         <span v-if="isNewHighScore" class="q-ml-sm">Congratulations!</span>
@@ -8,24 +8,19 @@
       <q-card class="__border-radius text-center q-ma-lg bg-red-2">
         <q-card-section>
           <div class="text-h5 q-pb-md">
-            Words You Got Right: {{ gamePreference.correctAnswer }}/{{ contents.length }}
+            Words You Got Right: 5/{{ contents.length }}
           </div>
           <div class="text-h5">SCORE: {{ gamePreference.score }}</div>
-          <div v-if="isNewHighScore" class="q-py-md">
+          <div v-if="isNewHighScore" class="q-pt-md">
             <div class="text-subtitl1 text-grey-8">Enter your name</div>
-            <q-input v-model="playerName" outlined dense bg-color="white" />
-          </div>
-          <div class="text-h5 q-pt-md" v-else>
-            <div>Player: {{ playerName }}</div>
+            <q-input v-model="isNewHighScore" outlined dense bg-color="white" />
           </div>
         </q-card-section>
 
         <q-separator />
 
         <q-card-section class="text-center">
-          <span v-if="isNewHighScore" class="text-h5"
-            >New Personal Best!</span
-          >
+          <span v-if="isNewHighScore" class="text-h5">New Personal Best!</span>
           <span v-else class="text-h5">Personal Best!</span>
         </q-card-section>
       </q-card>
@@ -37,7 +32,7 @@
             rounded
             color="grey"
             :label="isNewHighScore ? 'Save' : 'Play Again?'"
-            @click="isNewHighScore ? savePlayerStat() : playAgain()"
+            @click="playAgain()"
           >
           </q-btn>
         </div>
@@ -54,7 +49,7 @@
         </div>
       </q-card-section>
     </q-card>
-  </q-page>
+  </q-dialog>
 </template>
 
 <script lang="ts">
@@ -63,7 +58,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import { mapState, mapActions } from 'vuex';
 import playerService from 'src/services/player.service';
 import { IGame } from 'src/interfaces/game-interface';
-import { IPlayer } from 'src/interfaces/player.interface';
 
 @Component({
   computed: {
@@ -72,7 +66,11 @@ import { IPlayer } from 'src/interfaces/player.interface';
     ...mapState('game', ['gamePreference'])
   },
   methods: {
-    ...mapActions('game', ['paginateContents', 'generateRandomAnswer']),
+    ...mapActions('ui', ['showScoreDialog']),
+    ...mapActions('game', [
+      'paginateContents',
+      'generateRandomAnswer',
+    ]),
     ...mapActions('common', ['appendContent'])
   }
 })
@@ -80,6 +78,7 @@ export default class ScoreDialog extends Vue {
   isScoreDialog!: boolean;
   contents!: IContent[];
   gamePreference!: IGame;
+  showScoreDialog!: (isShow: boolean) => void;
   appendContent!: (routeParam: string) => Promise<void>;
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
@@ -87,13 +86,15 @@ export default class ScoreDialog extends Vue {
   isNewHighScore = false;
   playerName = '';
 
-  async created() {
+  mounted() {
     this.show = this.isScoreDialog;
-    await this.checkPlayersStat();
+    this.player();
   }
 
   async playAgain() {
-    await this.$router.replace(`/game/${this.$route.params.id}`);
+    await this.appendContent(this.$route.params.id);
+    await this.showContent();
+    this.showScoreDialog(false);
   }
 
   async showContent(): Promise<void> {
@@ -109,30 +110,19 @@ export default class ScoreDialog extends Vue {
     await this.generateRandomAnswer(this.contents);
   }
 
-  async checkPlayersStat(): Promise<void> {
-    console.log('scoreboard: ', this.gamePreference.score);
-    const status = await playerService.checkPlayersStat(
-      `score-${this.$route.params.id}`,
-      this.gamePreference.score
-    );
-    if (status) {
-      this.isNewHighScore = true;
-    } else {
-      this.isNewHighScore = false;
-    }
-  }
-
-  async savePlayerStat() {
-    const playerStats: IPlayer = {
-      score: this.gamePreference.score,
-      player: this.playerName
-    };
-    await playerService.savePlayerStat(
-      `score-${this.$route.params.id}`,
-      playerStats
-    );
-    this.isNewHighScore = false;
+  player() {
+    // let playerInfo: any = {
+    //   score: this.gamePreference.score,
+    //   player: this.playerName
+    // };
+    // let playerArr = [];
+    // playerArr.push(playerInfo);
+    // const player = await playerService.playScore(
+    //   `score-${this.$route.params.id}`,
+    //   playerArr
+    // );
   }
 }
+</script>
 
 <style></style>

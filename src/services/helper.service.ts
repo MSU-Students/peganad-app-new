@@ -1,13 +1,8 @@
 class HelperService {
-  async playAudio(audioBase64: string) {
+  async playAudio(audioBase64: string): Promise<HTMLAudioElement> {
     const audio = new Audio(audioBase64);
-    await audio.play();
     return new Promise(resolve => {
-      audio.onended = () => {
-        resolve({
-          playEnded: false
-        });
-      };
+      resolve(audio);
     });
   }
 }

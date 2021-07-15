@@ -14,12 +14,12 @@ const routes: RouteConfig[] = [
     component: MainLayout,
     children: [
       { path: '', component: Index },
+      { path: 'home', component: HomePage },
       { path: 'learn', component: Learn },
       { path: 'game', component: Game },
       { path: 'learn/:id', name: 'learn-content', component: LearnContent },
       { path: 'game/:id', name: 'game-content', component: GameContent },
-      { path: 'score', component: ScoreBoard},
-      { path: 'home', component: HomePage }
+      { path: 'score/:id', component: ScoreBoard}
     ]
   },
 

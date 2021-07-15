@@ -89,8 +89,9 @@ module.exports = {
     '@typescript-eslint/no-for-in-array': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
-    'no-var': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
     'prefer-const': 'off',
+    'no-var': 'off',
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
