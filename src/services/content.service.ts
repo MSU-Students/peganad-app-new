@@ -11,7 +11,7 @@ class ContentService {
     let localContent = await localbaseService.getContents(category);
     if (
       !localContent ||
-      localContent.length != 0 ||
+      localContent.length == 0 ||
       (localContent.length != onlineContent.length && navigator.onLine)
     ) {
       let result = await localbaseService.setContent(category, onlineContent);

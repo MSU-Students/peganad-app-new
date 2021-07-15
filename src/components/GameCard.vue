@@ -239,6 +239,16 @@ export default class GameCard extends Vue {
         this.game.timer -= 1;
         if (this.game.timer <= 5) {
           this.uiPrefrence.counterTextColor = 'text-red';
+          const sound = new Howl({
+            src: ['src/assets/game-audio/countdown.wav'],
+            onplayerror: function() {
+              sound.once('unlock', function() {
+                sound.play();
+              });
+            }
+          });
+
+          sound.play();
         }
       } else if (this.game.timer == 0) {
         this.uiPrefrence.selectedBtnColor = 'red-5';
