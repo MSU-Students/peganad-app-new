@@ -25,5 +25,11 @@ export const localbaseService = {
   async getPlayer(param: string): Promise<IPlayer[]> {
     const category = new LocalBase(param);
     return await category.getItem(param);
+  },
+
+  // delete player
+  async deletePlayer(param: string): Promise<IPlayer[]> {
+    const category = new LocalBase(param);
+    return await category.deleteItem(param);
   }
 };
