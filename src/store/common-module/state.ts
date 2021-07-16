@@ -6,7 +6,7 @@ export interface CommonStateInterface {
 
 function state(): CommonStateInterface {
   return {
-    contents: [],
+    contents: []
   };
 }
 

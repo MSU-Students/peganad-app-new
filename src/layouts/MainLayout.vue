@@ -2,15 +2,13 @@
   <q-layout view="lHh lpr lFf">
     <q-header :class="headerColor()">
       <q-toolbar
-        v-if="
-          ['/learn', `/learn/${$route.params.id}`].find(p => p == $route.path)
-        "
+        v-if="['/learn', `/learn/${$route.params.id}`].find((p) => p == $route.path)"
       >
         <q-btn
           flat
           round
           :icon="$route.name == 'learn-content' ? 'close' : 'arrow_back'"
-          :to="$route.path == '/learn' ? '/' : '/learn'"
+          :to="$route.path == '/learn' ? '/home' : '/learn'"
         />
         <q-toolbar-title
           v-if="$route.path == `/learn/${$route.params.id}`"
@@ -19,27 +17,21 @@
         >
       </q-toolbar>
       <q-toolbar
-        v-if="
-          ['/game', `/game/${$route.params.id}`].find(p => p == $route.path)
-        "
+        v-else-if="['/game', `/game/${$route.params.id}`].find((p) => p == $route.path)"
       >
         <q-btn
           flat
           round
           :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
-          :to="$route.path == '/game' ? '/' : '/game'"
+          :to="$route.path == '/game' ? '/home' : '/game'"
         />
         <q-toolbar-title
           v-if="$route.path == `/game/${$route.params.id}`"
           class="text-h5 text-weight-bold text-uppercase absolute-center"
           >Play {{ $route.params.id }}</q-toolbar-title
         >
-        <q-space ></q-space>
-        <q-btn 
-        flat
-        round
-        to="/board"
-        v-if="$route.path == '/game'" icon="emoji_events" />
+        <q-space></q-space>
+        <q-btn flat round to="/board" v-if="$route.path == '/game'" icon="emoji_events" />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -49,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import {Vue, Component} from 'vue-property-decorator';
 
 @Component({})
 export default class MainLayout extends Vue {

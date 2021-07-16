@@ -1,17 +1,47 @@
 <template>
-<q-page class="flex flex-center" >
-<div >
-<q-btn size="lg" color="yellow-8" icon="get_app" label="Download Content" />
-</div>
-</q-page>
+  <q-page class="__background flex flex-center">
+    <div class="text-center bg-white shadow-10 q-pa-md">
+      <div>
+        <q-btn color="yellow-8" label="Download Content" to="/home" />
+      </div>
+      <div>
+        <q-circular-progress
+          show-value
+          font-size="16px"
+          class="text-red q-ma-md"
+          :value="progress * 10"
+          size="100px"
+          :thickness="0.05"
+          color="red"
+          track-color="grey-3"
+        >
+          {{ progress }} / 10
+        </q-circular-progress>
+      </div>
+    </div>
+  </q-page>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import contentService from 'src/services/content.service';
+import {Vue, Component} from 'vue-property-decorator';
 
+@Component({})
+export default class HomePage extends Vue {
+  progress = 9;
+  async downloadContent() {
+    await contentService.downloadContent('animals');
+    await contentService.downloadContent('colors');
+    await contentService.downloadContent('numbers');
+    await contentService.downloadContent('words');
+  }
 }
 </script>
 
-<style>
-
+<style scope>
+.__background {
+  background: url('../assets/background.jpg');
+  background-position: center;
+  background-size: cover;
+}
 </style>

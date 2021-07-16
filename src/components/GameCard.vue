@@ -37,9 +37,7 @@
           v-if="uiPrefrence.isWrong"
           class="__border-radius bg-green text-white q-py-xs q-my-sm"
         >
-          <div class="q-pa-none text-caption text-capitalize">
-            Correct Answer:
-          </div>
+          <div class="q-pa-none text-caption text-capitalize">Correct Answer:</div>
           {{ gameAnswer.correctAnswer }}
         </div>
         <div v-else class="q-py-lg" style="height: 76px">
@@ -51,25 +49,17 @@
         <img :src="content.img" height="250" width="250" />
       </q-card-section>
       <q-card-actions class="row q-col-gutter-md q-pa-md">
-        <div
-          v-for="(answer, index) in gameAnswer['answers']"
-          :key="index"
-          class="col-6"
-        >
+        <div v-for="(answer, index) in gameAnswer['answers']" :key="index" class="col-6">
           <q-btn
             class="full-width"
             size="md"
             rounded
             push
-            :text-color="
-              index == game['selectedAnswer'].index ? 'white' : 'white'
-            "
-            :color="
-              index == game['selectedAnswer'].index ? 'purple-10' : 'grey'
-            "
+            :text-color="index == game['selectedAnswer'].index ? 'white' : 'white'"
+            :color="index == game['selectedAnswer'].index ? 'purple-10' : 'grey'"
             :label="answer"
             :disable="uiPrefrence.isAnswerCheck"
-            @click="selectAnswer({ index, answer })"
+            @click="selectAnswer({index, answer})"
           />
         </div>
       </q-card-actions>
@@ -80,49 +70,36 @@
       rounded
       push
       :text-color="
-        !uiPrefrence['isAnswerSelect']
-          ? 'white'
-          : uiPrefrence.selectedBtnTextColor
+        !uiPrefrence['isAnswerSelect'] ? 'white' : uiPrefrence.selectedBtnTextColor
       "
-      :color="
-        !uiPrefrence['isAnswerSelect'] ? 'grey' : uiPrefrence.selectedBtnColor
-      "
+      :color="!uiPrefrence['isAnswerSelect'] ? 'grey' : uiPrefrence.selectedBtnColor"
       :label="!uiPrefrence['isAnswerCheck'] ? 'Check' : 'Continue'"
       :disable="!uiPrefrence['isAnswerSelect']"
-      @click="
-        !uiPrefrence['isAnswerCheck']
-          ? checkSelectedAnswer()
-          : continueAnswering()
-      "
+      @click="!uiPrefrence['isAnswerCheck'] ? checkSelectedAnswer() : continueAnswering()"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { IContent } from 'src/interfaces/common-interface';
-import {
-  IGame,
-  IGameAnswer,
-  IUiPreference
-} from 'src/interfaces/game-interface';
-import { mapState, mapActions } from 'vuex';
+import {Vue, Component} from 'vue-property-decorator';
+import {IContent} from 'src/interfaces/common-interface';
+import {IGame, IGameAnswer, IUiPreference} from 'src/interfaces/game-interface';
+import {mapState, mapActions} from 'vuex';
 import helperService from 'src/services/helper.service';
-import { Howl, Howler } from 'howler';
 
 @Component({
   computed: {
     ...mapState('common', ['contents']),
-    ...mapState('game', ['displayContents', 'gameAnswer', 'contentPosition'])
+    ...mapState('game', ['displayContents', 'gameAnswer', 'contentPosition']),
   },
   methods: {
     ...mapActions('game', [
       'paginateContents',
       'generateRandomAnswer',
       'changeContentPosition',
-      'savePreferences'
-    ])
-  }
+      'savePreferences',
+    ]),
+  },
 })
 export default class GameCard extends Vue {
   contents!: IContent[];
@@ -141,8 +118,8 @@ export default class GameCard extends Vue {
     score: 0,
     selectedAnswer: {
       index: undefined,
-      answer: ''
-    }
+      answer: '',
+    },
   };
   uiPrefrence: IUiPreference = {
     isAnswerSelect: false,
@@ -150,7 +127,7 @@ export default class GameCard extends Vue {
     isWrong: false,
     selectedBtnColor: '',
     selectedBtnTextColor: '',
-    counterTextColor: 'text-white'
+    counterTextColor: 'text-white',
   };
 
   async created() {
@@ -165,7 +142,7 @@ export default class GameCard extends Vue {
     this.uiPrefrence.selectedBtnTextColor = 'white';
   }
 
-  selectAnswer(selectedOptions: { [key: string]: any }): void {
+  selectAnswer(selectedOptions: {[key: string]: any}): void {
     this.game.selectedAnswer.index = selectedOptions.index;
     this.game.selectedAnswer.answer = selectedOptions.answer;
     this.uiPrefrence.isAnswerSelect = true;
@@ -186,7 +163,7 @@ export default class GameCard extends Vue {
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = false;
       const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/correct-sound.wav')
+        require('src/assets/game-audio/correct.wav')
       );
       await audio.play();
     } else {
@@ -194,7 +171,7 @@ export default class GameCard extends Vue {
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = true;
       const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/wrong-sound.wav')
+        require('src/assets/game-audio/wrong.wav')
       );
       await audio.play();
     }
@@ -205,10 +182,11 @@ export default class GameCard extends Vue {
     if (this.contentPosition < this.contents.length) {
       this.game.questionCounter += 1;
       this.changeContentPosition(1);
+      await this.showContent();
     } else if (this.contentPosition == this.contents.length) {
       this.savePreferences(this.game);
+      clearTimeout(this.game.currentTime);
       await this.$router.replace(`/score/${this.$route.params.id}`);
-      this.resetGamePreference();
     }
     this.game.timer = 10;
     this.game.selectedAnswer.index = undefined;
@@ -217,7 +195,6 @@ export default class GameCard extends Vue {
     this.uiPrefrence.isAnswerCheck = false;
     this.uiPrefrence.isWrong = false;
     this.uiPrefrence.counterTextColor = 'text-white';
-    await this.showContent();
     clearTimeout(this.game.currentTime);
   }
 
@@ -234,21 +211,17 @@ export default class GameCard extends Vue {
   }
 
   countDownTimer() {
-    this.game.currentTime = setTimeout(() => {
+    this.game.currentTime = setTimeout(async () => {
       if (this.game.timer > 0) {
+        console.log('here: ', this.game.timer);
         this.game.timer -= 1;
         if (this.game.timer <= 5) {
+          console.log('here: ', this.game.currentTime);
           this.uiPrefrence.counterTextColor = 'text-red';
-          const sound = new Howl({
-            src: ['src/assets/game-audio/countdown.wav'],
-            onplayerror: function() {
-              sound.once('unlock', function() {
-                sound.play();
-              });
-            }
-          });
-
-          sound.play();
+          const audio: HTMLAudioElement = await helperService.playAudio(
+            require('src/assets/game-audio/countdown.wav')
+          );
+          await audio.play();
         }
       } else if (this.game.timer == 0) {
         this.uiPrefrence.selectedBtnColor = 'red-5';
@@ -256,27 +229,18 @@ export default class GameCard extends Vue {
         this.uiPrefrence.isAnswerCheck = true;
         this.uiPrefrence.isAnswerSelect = true;
         this.uiPrefrence.isWrong = true;
+        const audio: HTMLAudioElement = await helperService.playAudio(
+          require('src/assets/game-audio/wrong.wav')
+        );
+        await audio.play();
       }
       this.countDownTimer();
     }, 1000) as any;
   }
 
-  resetGamePreference() {
-    return (this.game = {
-      currentTime: 0,
-      timer: 10,
-      questionCounter: 1,
-      correctAnswer: 0,
-      score: 0,
-      selectedAnswer: {
-        index: undefined,
-        answer: ''
-      }
-    });
-  }
-
   destroyed() {
-    this.resetGamePreference();
+    console.log('exit game card!');
+    clearTimeout(this.game.currentTime);
   }
 }
 </script>

@@ -8,24 +8,24 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import {Vue, Component} from 'vue-property-decorator';
+import {mapState, mapActions} from 'vuex';
 import GameCard from 'components/GameCard.vue';
 import PageLodaer from 'components/PageLoader.vue';
 import NoContent from 'components/NoContent.vue';
 import ScoreDialog from 'components/ScoreDialog.vue';
-import { IContent } from 'src/interfaces/common-interface';
+import {IContent} from 'src/interfaces/common-interface';
 
 @Component({
   components: {
     GameCard,
     PageLodaer,
     NoContent,
-    ScoreDialog
+    ScoreDialog,
   },
   computed: {
     ...mapState('ui', ['isPageLoading', 'isScoreDialog']),
-    ...mapState('common', ['contents'])
+    ...mapState('common', ['contents']),
   },
   methods: {
     ...mapActions('common', ['appendContent']),
@@ -33,9 +33,9 @@ import { IContent } from 'src/interfaces/common-interface';
     ...mapActions('game', [
       'paginateContents',
       'generateRandomAnswer',
-      'resetContentPosition'
-    ])
-  }
+      'resetContentPosition',
+    ]),
+  },
 })
 export default class LearnPageContent extends Vue {
   isPageLoading!: boolean;
@@ -60,7 +60,6 @@ export default class LearnPageContent extends Vue {
 
   destroyed() {
     console.log('page exit!');
-    this.resetContentPosition();
   }
 }
 </script>

@@ -35,15 +35,15 @@
           </div>
           <div
             v-else-if="
-              gamePreference.correctAnswer < contents.length &&
-              gamePreference.correctAnswer > contents.length / 2
+              gamePreference.correctAnswer <= contents.length / 2 &&
+              gamePreference.correctAnswer != 1
             "
           >
             <q-icon name="grade" color="yellow-8" size="lg" />
             <q-icon name="grade" color="yellow-8" size="lg" />
           </div>
           <q-icon
-            v-else-if="gamePreference.correctAnswer < contents.length / 2"
+            v-else-if="gamePreference.correctAnswer == 1"
             name="grade"
             color="yellow-8"
             size="lg"
@@ -59,11 +59,16 @@
           <div v-if="isNewHighScore" class="q-py-md">
             <q-input
               v-model="playerName"
+              ref="score"
               outlined
               dense
               bg-color="white"
               label="Enter your name"
-              :rules="[(val) => val.length <= 10 || 'Please use maximum 10 characters']"
+              lazy-rules
+              :rules="[
+                (val) => !!val || 'Please enter player name',
+                (val) => val.length <= 10 || 'Please use maximum 10 character',
+              ]"
             />
           </div>
           <div
@@ -93,12 +98,17 @@
 </template>
 
 <script lang="ts">
-import { IContent } from 'src/interfaces/common-interface';
-import { Vue, Component } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import {IContent} from 'src/interfaces/common-interface';
+import {Vue, Component} from 'vue-property-decorator';
+import {mapState, mapActions} from 'vuex';
 import playerService from 'src/services/player.service';
-import { IGame } from 'src/interfaces/game-interface';
-import { IPlayer } from 'src/interfaces/player.interface';
+import {IGame} from 'src/interfaces/game-interface';
+import {IPlayer} from 'src/interfaces/player.interface';
+
+interface RefsVue extends Vue {
+  validate(): void;
+  hasError: boolean;
+}
 
 @Component({
   computed: {
@@ -112,8 +122,12 @@ import { IPlayer } from 'src/interfaces/player.interface';
   },
 })
 export default class ScoreDialog extends Vue {
+  $refs!: {
+    score: RefsVue;
+  };
   isScoreDialog!: boolean;
   contents!: IContent[];
+  formHasError!: boolean;
   gamePreference!: IGame;
   appendContent!: (routeParam: string) => Promise<void>;
   paginateContents!: (contents: IContent[]) => Promise<void>;
@@ -159,13 +173,23 @@ export default class ScoreDialog extends Vue {
   }
 
   async savePlayerStat() {
-    const playerStats: IPlayer = {
-      score: this.gamePreference.score,
-      player: this.playerName,
-    };
-    await playerService.savePlayerStat(`score-${this.$route.params.id}`, playerStats);
-    this.isSave = true;
-    this.isNewHighScore = false;
+    this.$refs.score.validate();
+    if (
+      this.$refs.score.hasError ||
+      this.playerName == '' ||
+      this.playerName.length >= 10
+    ) {
+      console.log(this.playerName.length);
+      this.formHasError = true;
+    } else {
+      const playerStats: IPlayer = {
+        score: this.gamePreference.score,
+        player: this.playerName,
+      };
+      await playerService.savePlayerStat(`score-${this.$route.params.id}`, playerStats);
+      this.isSave = true;
+      this.isNewHighScore = false;
+    }
   }
 }
 </script>

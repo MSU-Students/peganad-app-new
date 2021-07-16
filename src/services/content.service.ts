@@ -4,6 +4,32 @@ import { IContent } from 'src/interfaces/common-interface';
 import fireStoreService from 'src/services/firestore.service';
 
 class ContentService {
+  async downloadContent(category: string) {
+    let localContent = await localbaseService.getContents(category);
+    let onlineContent = await fireStoreService.getContents(category);
+    if (
+      !localContent ||
+      localContent.length == 0 ||
+      (onlineContent.length != 0 &&
+        localContent.length != onlineContent.length &&
+        navigator.onLine)
+    ) {
+      console.log(
+        'localContent: ',
+        localContent,
+        'onlineContent: ',
+        onlineContent
+      );
+      const res = await localbaseService.setContent(category, onlineContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
+    } else {
+      const res = await localbaseService.setContent(category, localContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
+    }
+  }
+
   async appendContent(
     onlineContent: IContent[],
     category: string
@@ -12,12 +38,24 @@ class ContentService {
     if (
       !localContent ||
       localContent.length == 0 ||
-      (localContent.length != onlineContent.length && navigator.onLine)
+      (onlineContent.length != 0 &&
+        localContent.length != onlineContent.length &&
+        navigator.onLine)
     ) {
-      let result = await localbaseService.setContent(category, onlineContent);
-      return result;
+      console.log(
+        'localContent: ',
+        localContent,
+        'onlineContent: ',
+        onlineContent
+      );
+      const res = await localbaseService.setContent(category, onlineContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
+    } else {
+      const res = await localbaseService.setContent(category, localContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
     }
-    return localContent.sort(() => Math.random() - 0.5);
   }
 
   async paginateContents(
