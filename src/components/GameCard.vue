@@ -186,7 +186,7 @@ export default class GameCard extends Vue {
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = false;
       const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/correct-sound.wav')
+        require('src/assets/game-audio/correct.wav')
       );
       await audio.play();
     } else {
@@ -194,7 +194,7 @@ export default class GameCard extends Vue {
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = true;
       const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/wrong-sound.wav')
+        require('src/assets/game-audio/wrong.wav')
       );
       await audio.play();
     }
@@ -234,21 +234,15 @@ export default class GameCard extends Vue {
   }
 
   countDownTimer() {
-    this.game.currentTime = setTimeout(() => {
+    this.game.currentTime = setTimeout(async () => {
       if (this.game.timer > 0) {
         this.game.timer -= 1;
         if (this.game.timer <= 5) {
           this.uiPrefrence.counterTextColor = 'text-red';
-          const sound = new Howl({
-            src: ['src/assets/game-audio/countdown.wav'],
-            onplayerror: function() {
-              sound.once('unlock', function() {
-                sound.play();
-              });
-            }
-          });
-
-          sound.play();
+          const audio: HTMLAudioElement = await helperService.playAudio(
+            require('src/assets/game-audio/countdown.wav')
+          );
+          await audio.play();
         }
       } else if (this.game.timer == 0) {
         this.uiPrefrence.selectedBtnColor = 'red-5';
@@ -256,6 +250,10 @@ export default class GameCard extends Vue {
         this.uiPrefrence.isAnswerCheck = true;
         this.uiPrefrence.isAnswerSelect = true;
         this.uiPrefrence.isWrong = true;
+        const audio: HTMLAudioElement = await helperService.playAudio(
+          require('src/assets/game-audio/wrong.wav')
+        );
+        await audio.play();
       }
       this.countDownTimer();
     }, 1000) as any;

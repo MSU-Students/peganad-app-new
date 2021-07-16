@@ -12,12 +12,24 @@ class ContentService {
     if (
       !localContent ||
       localContent.length == 0 ||
-      (localContent.length != onlineContent.length && navigator.onLine)
+      (onlineContent.length != 0 &&
+        localContent.length != onlineContent.length &&
+        navigator.onLine)
     ) {
-      let result = await localbaseService.setContent(category, onlineContent);
-      return result;
+      console.log(
+        'localContent: ',
+        localContent,
+        'onlineContent: ',
+        onlineContent
+      );
+      const res = await localbaseService.setContent(category, onlineContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
+    } else {
+      const res = await localbaseService.setContent(category, localContent);
+      res.sort(() => Math.random() - 0.5);
+      return res;
     }
-    return localContent.sort(() => Math.random() - 0.5);
   }
 
   async paginateContents(
