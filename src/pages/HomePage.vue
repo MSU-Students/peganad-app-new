@@ -1,6 +1,5 @@
 <template>
-<q-page class="flex flex-center" padding style="background: linear-gradient(to bottom, #51aa4b 0%, #f7f382 100%);">
-
+<q-page class="flex flex-center" >
 <div >
 <q-btn size="lg" color="yellow-8" icon="get_app" label="Download Content" />
 </div>

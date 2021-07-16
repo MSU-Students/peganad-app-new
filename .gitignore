@@ -3,7 +3,8 @@
 node_modules
 
 # Firebase/Firestore Related
-/peganad-emulator-data/*
+/peganad-emulator-data
+/firebase-export-1626409359460W8ftr8
 start-emulator.sh
 ui-debug.log
 firestore.rules
