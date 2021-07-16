@@ -38,6 +38,7 @@
         <q-btn 
         flat
         round
+        to="/board"
         v-if="$route.path == '/game'" icon="emoji_events" />
       </q-toolbar>
     </q-header>
