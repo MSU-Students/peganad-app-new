@@ -1,6 +1,3 @@
-// import {
-//   firestore
-// } from 'app/firestore/firebaseInit';
 import { firestore } from 'app/firestore/firebaseInit';
 interface IContent {
   name: string;
@@ -8,7 +5,6 @@ interface IContent {
   img: string;
   audio: string;
 }
-
 class FirestoreService {
   async getContents(params: string): Promise<IContent[]> {
     const result = await firestore.collection(params).get();

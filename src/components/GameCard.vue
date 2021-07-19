@@ -46,7 +46,7 @@
       </q-card-section>
 
       <q-card-section class="text-center bg-white">
-        <img :src="content.img" height="250" width="250" />
+        <img :src="`data:image/jpeg;base64,${content.img}`" height="250" width="250" />
       </q-card-section>
       <q-card-actions class="row q-col-gutter-md q-pa-md">
         <div v-for="(answer, index) in gameAnswer['answers']" :key="index" class="col-6">
@@ -109,7 +109,7 @@ export default class GameCard extends Vue {
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
   changeContentPosition!: (position: number) => void;
-  savePreferences!: (save: IGame) => void;
+  savePreferences!: (save: any) => void;
   game: IGame = {
     currentTime: 0,
     timer: 10,
@@ -184,7 +184,10 @@ export default class GameCard extends Vue {
       this.changeContentPosition(1);
       await this.showContent();
     } else if (this.contentPosition == this.contents.length) {
-      this.savePreferences(this.game);
+      this.savePreferences({
+        score: this.game.score,
+        correctAnswer: this.game.correctAnswer,
+      });
       clearTimeout(this.game.currentTime);
       await this.$router.replace(`/score/${this.$route.params.id}`);
     }
@@ -233,6 +236,7 @@ export default class GameCard extends Vue {
           require('src/assets/game-audio/wrong.wav')
         );
         await audio.play();
+        clearTimeout(this.game.currentTime);
       }
       this.countDownTimer();
     }, 1000) as any;

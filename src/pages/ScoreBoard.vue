@@ -33,21 +33,16 @@
             <q-icon name="grade" color="yellow-8" size="lg" />
             <q-icon name="grade" color="yellow-8" size="lg" />
           </div>
-          <div
-            v-else-if="
-              gamePreference.correctAnswer <= contents.length / 2 &&
-              gamePreference.correctAnswer != 1
-            "
-          >
-            <q-icon name="grade" color="yellow-8" size="lg" />
-            <q-icon name="grade" color="yellow-8" size="lg" />
-          </div>
           <q-icon
             v-else-if="gamePreference.correctAnswer == 1"
             name="grade"
             color="yellow-8"
             size="lg"
           />
+          <div v-else>
+            <q-icon name="grade" color="yellow-8" size="lg" />
+            <q-icon name="grade" color="yellow-8" size="lg" />
+          </div>
         </div>
         <div class="q-pt-md">
           <div class="text-h6">SCORE</div>
@@ -112,7 +107,6 @@ interface RefsVue extends Vue {
 
 @Component({
   computed: {
-    ...mapState('ui', ['isScoreDialog']),
     ...mapState('common', ['contents']),
     ...mapState('game', ['gamePreference']),
   },
@@ -121,11 +115,10 @@ interface RefsVue extends Vue {
     ...mapActions('common', ['appendContent']),
   },
 })
-export default class ScoreDialog extends Vue {
+export default class ScoreBoard extends Vue {
   $refs!: {
     score: RefsVue;
   };
-  isScoreDialog!: boolean;
   contents!: IContent[];
   formHasError!: boolean;
   gamePreference!: IGame;
@@ -138,7 +131,6 @@ export default class ScoreDialog extends Vue {
   playerName = '';
 
   async created() {
-    this.show = this.isScoreDialog;
     await this.checkPlayersStat();
   }
 

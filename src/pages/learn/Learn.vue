@@ -2,12 +2,15 @@
   <q-page class="bg-pink-2 q-pa-md text-center">
     <div class="sub-header-container q-mt-am">
       <div class="flex flex-center text-h2" style="height: 250px">
-        <span class="text-h3 text-black">Ready To Learn?</span>
+        <div class="text-h3 text-black">Ready To Learn?</div>
       </div>
     </div>
     <div class="row q-col-gutter-md">
       <div class="col-6">
-        <q-card class="card bg-deep-purple-5" @click="() => $router.replace('/learn/animals')">
+        <q-card
+          class="card bg-deep-purple-5"
+          @click="() => $router.replace('/learn/animals')"
+        >
           <q-img img-class="q-ma-sm" src="~assets/design/animals.png" basic></q-img>
           <q-card-section>
             <div class="text-h6 text-center text-white">Animals</div>
@@ -48,7 +51,7 @@ export default {};
 
 <style scoped>
 .sub-header-container {
-  background: url("../../assets/design/study1.png");
+  background: url('../../assets/design/study1.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;

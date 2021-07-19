@@ -1,38 +1,12 @@
 import { localbaseService } from 'src/services/localbase.service';
-import firestore from 'src/services/firestore.service';
 import { IContent } from 'src/interfaces/common-interface';
-import fireStoreService from 'src/services/firestore.service';
+import Routes from '../router';
 
 class ContentService {
-  async downloadContent(category: string) {
-    let localContent = await localbaseService.getContents(category);
-    let onlineContent = await fireStoreService.getContents(category);
-    if (
-      !localContent ||
-      localContent.length == 0 ||
-      (onlineContent.length != 0 &&
-        localContent.length != onlineContent.length &&
-        navigator.onLine)
-    ) {
-      console.log(
-        'localContent: ',
-        localContent,
-        'onlineContent: ',
-        onlineContent
-      );
-      const res = await localbaseService.setContent(category, onlineContent);
-      res.sort(() => Math.random() - 0.5);
-      return res;
-    } else {
-      const res = await localbaseService.setContent(category, localContent);
-      res.sort(() => Math.random() - 0.5);
-      return res;
-    }
-  }
-
   async appendContent(
     onlineContent: IContent[],
-    category: string
+    category: string,
+    path: string
   ): Promise<IContent[]> {
     let localContent = await localbaseService.getContents(category);
     if (
@@ -42,19 +16,83 @@ class ContentService {
         localContent.length != onlineContent.length &&
         navigator.onLine)
     ) {
-      console.log(
-        'localContent: ',
-        localContent,
-        'onlineContent: ',
-        onlineContent
-      );
-      const res = await localbaseService.setContent(category, onlineContent);
-      res.sort(() => Math.random() - 0.5);
-      return res;
+      if (onlineContent.length != 0) {
+        const res = await this.updateContent(category, onlineContent);
+        if (path != 'learn-content') {
+          res.sort(() => Math.random() - 0.5);
+        }
+        return res;
+      } else {
+        return [];
+      }
     } else {
       const res = await localbaseService.setContent(category, localContent);
-      res.sort(() => Math.random() - 0.5);
+      if (path != 'learn-content') {
+        res.sort(() => Math.random() - 0.5);
+      }
       return res;
+    }
+  }
+
+  async updateContent(
+    category: string,
+    docData: IContent[]
+  ): Promise<IContent[]> {
+    // updating content into new base64 value
+    return new Promise(resolve => {
+      try {
+        if (typeof docData != 'undefined') {
+          let newContent: IContent[] = [];
+          docData.map(async doc => {
+            let updatedContent = {
+              name: doc.name,
+              translatedName: doc.translatedName,
+              img: (await this.getBase64FromUrl(doc.img)) as string,
+              audio: (await this.getBase64FromUrl(doc.audio)) as string
+            };
+            newContent.push(updatedContent);
+            if (newContent.length == docData.length) {
+              const res = await localbaseService.setContent(
+                category,
+                newContent
+              );
+              resolve(res);
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async getBase64FromUrl(url: string) {
+    try {
+      if (navigator.onLine) {
+        var res = await fetch(url);
+        var blob = await res.blob();
+
+        return new Promise((resolve, reject) => {
+          var reader: any = new FileReader();
+          reader.addEventListener(
+            'load',
+            function() {
+              var base64data = reader.result.substr(
+                reader.result.indexOf(',') + 1
+              );
+              resolve(base64data);
+            },
+            false
+          );
+
+          reader.onerror = () => {
+            return reject(this);
+          };
+          reader.readAsDataURL(blob);
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

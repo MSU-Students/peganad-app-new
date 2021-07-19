@@ -2,7 +2,7 @@
   <q-page class="__background flex flex-center">
     <div class="text-center bg-white shadow-10 q-pa-md">
       <div>
-        <q-btn color="yellow-8" label="Download Content" to="/home" />
+        <q-btn color="yellow-8" label="Download Content" @click="downloadContent()" />
       </div>
       <div>
         <q-circular-progress
@@ -25,15 +25,18 @@
 <script lang="ts">
 import contentService from 'src/services/content.service';
 import {Vue, Component} from 'vue-property-decorator';
+import {mapActions} from 'vuex';
 
-@Component({})
+@Component({
+  methods: {
+    ...mapActions('common', ['startDownload']),
+  },
+})
 export default class HomePage extends Vue {
   progress = 9;
+  startDownload!: () => Promise<void>;
   async downloadContent() {
-    await contentService.downloadContent('animals');
-    await contentService.downloadContent('colors');
-    await contentService.downloadContent('numbers');
-    await contentService.downloadContent('words');
+    await this.startDownload();
   }
 }
 </script>

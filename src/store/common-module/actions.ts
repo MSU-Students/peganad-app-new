@@ -6,11 +6,12 @@ import { StateInterface } from '../index';
 import { CommonStateInterface } from './state';
 
 const actions: ActionTree<CommonStateInterface, StateInterface> = {
-  async appendContent(context, category: string): Promise<void> {
-    const categoryContent = await firestoreService.getContents(category);
+  async appendContent(context, payload: any): Promise<void> {
+    const categoryContent = await firestoreService.getContents(payload.category);
     const content = await contentService.appendContent(
       categoryContent,
-      category
+      payload.category,
+      payload.path
     );
     context.commit('appendContent', content);
   }

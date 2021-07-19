@@ -3,7 +3,6 @@
     <GameCard v-if="!isPageLoading && contents.length != 0" />
     <PageLodaer v-else-if="isPageLoading" />
     <NoContent v-else-if="contents.length == 0" />
-    <ScoreDialog v-if="isScoreDialog" />
   </q-page>
 </template>
 
@@ -13,7 +12,6 @@ import {mapState, mapActions} from 'vuex';
 import GameCard from 'components/GameCard.vue';
 import PageLodaer from 'components/PageLoader.vue';
 import NoContent from 'components/NoContent.vue';
-import ScoreDialog from 'components/ScoreDialog.vue';
 import {IContent} from 'src/interfaces/common-interface';
 
 @Component({
@@ -21,14 +19,13 @@ import {IContent} from 'src/interfaces/common-interface';
     GameCard,
     PageLodaer,
     NoContent,
-    ScoreDialog,
   },
   computed: {
-    ...mapState('ui', ['isPageLoading', 'isScoreDialog']),
+    ...mapState('ui', ['isPageLoading']),
     ...mapState('common', ['contents']),
   },
   methods: {
-    ...mapActions('common', ['appendContent']),
+    ...mapActions('common', ['appendContent', 'resetContentPosition']),
     ...mapActions('ui', ['showLoading']),
     ...mapActions('game', [
       'paginateContents',
@@ -40,7 +37,7 @@ import {IContent} from 'src/interfaces/common-interface';
 export default class LearnPageContent extends Vue {
   isPageLoading!: boolean;
   contents!: IContent[];
-  appendContent!: (routeParam: string) => Promise<void>;
+  appendContent!: (param: any) => Promise<void>;
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
   resetContentPosition!: () => void;
@@ -52,14 +49,20 @@ export default class LearnPageContent extends Vue {
   async fetchContent(): Promise<void> {
     console.log('page loader!');
     this.showLoading(true);
-    await this.appendContent(this.$route.params.id);
-    await this.paginateContents(this.contents);
-    await this.generateRandomAnswer(this.contents);
+    console.log(this.contents);
+    await this.appendContent({
+      category: this.$route.params.id,
+      path: this.$route.name,
+    });
+    if (this.contents.length != 0) {
+      await this.paginateContents(this.contents);
+      await this.generateRandomAnswer(this.contents);
+    }
     this.showLoading(false);
   }
 
   destroyed() {
-    console.log('page exit!');
+    this.resetContentPosition();
   }
 }
 </script>

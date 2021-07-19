@@ -90,6 +90,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/restrict-plus-operands': 'off',
     'prefer-const': 'off',
     'no-var': 'off',
 

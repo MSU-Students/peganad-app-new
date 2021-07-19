@@ -8,9 +8,9 @@
     <div
       class="bg-white shadow-10 q-pa-md"
       v-if="
-        animalPlayer.length == 0 ||
-        colorPlayer.length == 0 ||
-        numberPlayer.length == 0 ||
+        animalPlayer.length == 0 &&
+        colorPlayer.length == 0 &&
+        numberPlayer.length == 0 &&
         wordPlayer.length == 0
       "
     >

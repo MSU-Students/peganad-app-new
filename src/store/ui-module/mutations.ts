@@ -6,9 +6,6 @@ const mutation: MutationTree<UiStateInterface> = {
     state.isPageLoading = isLoad;
   },
 
-  showScoreDialog(state, isShow) {
-    state.isScoreDialog = isShow;
-  }
 };
 
 export default mutation;
