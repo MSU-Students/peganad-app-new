@@ -6,7 +6,6 @@ import Game from 'pages/game/Game.vue';
 import LearnContent from 'pages/learn/LearnPageContent.vue';
 import GameContent from 'pages/game/GamePageContent.vue';
 import ScoreBoard from 'pages/ScoreBoard.vue';
-import HomePage from 'pages/HomePage.vue';
 import LeaderBoard from 'pages/score/LeaderBoard.vue';
 
 const routes: RouteConfig[] = [
@@ -14,8 +13,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: MainLayout,
     children: [
-      { path: '', component: HomePage },
-      { path: 'home', component: Index },
+      { path: '', component: Index },
       { path: 'learn', component: Learn },
       { path: 'game', component: Game },
       { path: 'learn/:id', name: 'learn-content', component: LearnContent },
