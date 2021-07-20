@@ -24,6 +24,7 @@
           round
           :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
           :to="$route.path == '/game' ? '/home' : '/game'"
+          @click="closeGame()"
         />
         <q-toolbar-title
           v-if="$route.path == `/game/${$route.params.id}`"

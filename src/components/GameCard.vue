@@ -201,12 +201,6 @@ export default class GameCard extends Vue {
     clearTimeout(this.game.currentTime);
   }
 
-  closeGame() {
-    if (this.game.score != 0) {
-    } else {
-    }
-  }
-
   startTimer(): void {
     setTimeout(() => {
       this.countDownTimer();
