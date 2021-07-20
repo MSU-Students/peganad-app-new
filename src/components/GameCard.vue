@@ -202,35 +202,31 @@ export default class GameCard extends Vue {
   }
 
   startTimer(): void {
-    setTimeout(() => {
-      this.countDownTimer();
-    }, 500);
+    this.countDownTimer();
   }
 
   countDownTimer() {
     this.game.currentTime = setTimeout(async () => {
       if (this.game.timer > 0) {
-        console.log('here: ', this.game.timer);
         this.game.timer -= 1;
-        if (this.game.timer <= 5) {
-          console.log('here: ', this.game.currentTime);
+        if (this.game.timer == 4) {
           this.uiPrefrence.counterTextColor = 'text-red';
           const audio: HTMLAudioElement = await helperService.playAudio(
             require('src/assets/game-audio/countdown.wav')
           );
           await audio.play();
+        } else if (this.game.timer == 0) {
+          this.uiPrefrence.selectedBtnColor = 'red-5';
+          this.uiPrefrence.selectedBtnTextColor = 'white';
+          this.uiPrefrence.isAnswerCheck = true;
+          this.uiPrefrence.isAnswerSelect = true;
+          this.uiPrefrence.isWrong = true;
+          const audio: HTMLAudioElement = await helperService.playAudio(
+            require('src/assets/game-audio/wrong.wav')
+          );
+          await audio.play();
+          clearTimeout(this.game.currentTime);
         }
-      } else if (this.game.timer == 0) {
-        this.uiPrefrence.selectedBtnColor = 'red-5';
-        this.uiPrefrence.selectedBtnTextColor = 'white';
-        this.uiPrefrence.isAnswerCheck = true;
-        this.uiPrefrence.isAnswerSelect = true;
-        this.uiPrefrence.isWrong = true;
-        const audio: HTMLAudioElement = await helperService.playAudio(
-          require('src/assets/game-audio/wrong.wav')
-        );
-        await audio.play();
-        clearTimeout(this.game.currentTime);
       }
       this.countDownTimer();
     }, 1000) as any;

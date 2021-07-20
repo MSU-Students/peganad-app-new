@@ -8,7 +8,7 @@
           flat
           round
           :icon="$route.name == 'learn-content' ? 'close' : 'arrow_back'"
-          :to="$route.path == '/learn' ? '/home' : '/learn'"
+          :to="$route.path == '/learn' ? '/' : '/learn'"
         />
         <q-toolbar-title
           v-if="$route.path == `/learn/${$route.params.id}`"
@@ -23,7 +23,7 @@
           flat
           round
           :icon="$route.name == 'game-content' ? 'close' : 'arrow_back'"
-          :to="$route.path == '/game' ? '/home' : '/game'"
+          :to="$route.path == '/game' ? '/' : '/game'"
           @click="closeGame()"
         />
         <q-toolbar-title
@@ -67,5 +67,7 @@ export default class MainLayout extends Vue {
   onGamePage() {
     return this.$route.path == '/game';
   }
+
+  closeGame() {}
 }
 </script>

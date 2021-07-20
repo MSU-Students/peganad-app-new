@@ -39,7 +39,7 @@
             color="yellow-8"
             size="lg"
           />
-          <div v-else>
+          <div v-else-if="gamePreference.correctAnswer != 0">
             <q-icon name="grade" color="yellow-8" size="lg" />
             <q-icon name="grade" color="yellow-8" size="lg" />
           </div>
