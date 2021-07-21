@@ -19,6 +19,7 @@ export interface IUiPreference {
   isAnswerSelect: boolean;
   isAnswerCheck: boolean;
   isWrong: boolean;
+  isCorrect: boolean;
   selectedBtnColor: string;
   selectedBtnTextColor: string;
   counterTextColor: string;

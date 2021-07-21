@@ -1,22 +1,11 @@
 import { IContent } from 'src/interfaces/common-interface';
+import { IGame, IGameAnswer } from 'src/interfaces/game-interface';
 
 export interface GameStateInterface {
   displayContents: IContent[];
   contentPosition: number;
-  gameAnswer: {
-    correctAnswer: string;
-    answers: string[];
-  };
-  gamePreference: {
-    currentTime: number;
-    timer: number;
-    questionCounter: number;
-    score: number;
-    selectedAnswer: {
-      index: undefined;
-      answer: string;
-    };
-  };
+  gameAnswer: IGameAnswer;
+  gamePreference: IGame;
 }
 
 function state(): GameStateInterface {
@@ -31,6 +20,7 @@ function state(): GameStateInterface {
       currentTime: 0,
       timer: 10,
       questionCounter: 1,
+      correctAnswer: 0,
       score: 0,
       selectedAnswer: {
         index: undefined,
