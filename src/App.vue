@@ -4,6 +4,7 @@
   </div>
 </template>
 <script lang="ts">
+import 'animate.css';
 import {Vue, Component} from 'vue-property-decorator';
 
 @Component
