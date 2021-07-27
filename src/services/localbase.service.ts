@@ -12,6 +12,7 @@ export const localbaseService = {
   // get contents
   async getContents(param: string): Promise<IContent[]> {
     const category = new LocalBase(param);
+    const res = await category.getItem(param);
     return await category.getItem(param);
   },
 

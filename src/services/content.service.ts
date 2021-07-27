@@ -1,6 +1,5 @@
 import { localbaseService } from 'src/services/localbase.service';
 import { IContent } from 'src/interfaces/common-interface';
-import Routes from '../router';
 
 class ContentService {
   async appendContent(

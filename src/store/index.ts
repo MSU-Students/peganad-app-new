@@ -1,5 +1,5 @@
+import Vuex, { Store } from 'vuex';
 import { store } from 'quasar/wrappers';
-import Vuex from 'vuex';
 
 import common from './common-module';
 import { CommonStateInterface } from './common-module/state';
@@ -20,6 +20,10 @@ export interface StateInterface {
   uiInterface: UiStateInterface;
 }
 
+export const $store: { ref?: Store<StateInterface> } = {
+  ref: undefined
+};
+
 export default store(function({ Vue }) {
   Vue.use(Vuex);
 
@@ -34,6 +38,6 @@ export default store(function({ Vue }) {
     // for dev mode only
     strict: !!process.env.DEBUGGING
   });
-
+  $store.ref = Store;
   return Store;
 });
