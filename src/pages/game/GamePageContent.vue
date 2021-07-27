@@ -1,8 +1,8 @@
 <template>
   <q-page class="q-px-lg bg-info flex flex-center">
     <GameCard v-if="!isPageLoading && contents.length != 0" />
+    <NoContent v-else-if="contents.length == 0 && !isPageLoading" />
     <PageLodaer v-else-if="isPageLoading" />
-    <NoContent v-else-if="contents.length == 0" />
   </q-page>
 </template>
 
@@ -49,7 +49,6 @@ export default class LearnPageContent extends Vue {
   async fetchContent(): Promise<void> {
     console.log('page loader!');
     this.showLoading(true);
-    console.log(this.contents);
     await this.appendContent({
       category: this.$route.params.id,
       path: this.$route.name,

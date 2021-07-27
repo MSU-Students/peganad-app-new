@@ -82,7 +82,7 @@
 
     <q-card v-if="numberPlayer.length != 0" class="q-ma-md text-grey-9" flat bordered>
       <q-card-section>
-        <div class="text-h5 text-weight-bold q-pb-md">Colors Best Score</div>
+        <div class="text-h5 text-weight-bold q-pb-md">Numbers Best Score</div>
         <q-separator />
         <template v-for="(player, index) in numberPlayer">
           <div class="row justify-center q-py-sm text-h6" :key="index">
@@ -113,7 +113,7 @@
 
     <q-card v-if="wordPlayer.length != 0" class="q-ma-md text-grey-9" flat bordered>
       <q-card-section>
-        <div class="text-h5 text-weight-bold q-pb-md">Colors Best Score</div>
+        <div class="text-h5 text-weight-bold q-pb-md">Words Best Score</div>
         <q-separator />
         <template v-for="(player, index) in wordPlayer">
           <div class="row justify-center q-py-sm text-h6" :key="index">

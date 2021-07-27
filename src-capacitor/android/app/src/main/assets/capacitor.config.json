@@ -3,8 +3,5 @@
   "appName": "Peganad App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www",
-  "server": {
-    "url": "http://172.18.48.1:8080"
-  }
+  "webDir": "www"
 }

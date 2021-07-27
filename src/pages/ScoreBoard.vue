@@ -124,7 +124,11 @@ interface RefsVue extends Vue {
     ...mapState('game', ['gamePreference']),
   },
   methods: {
-    ...mapActions('game', ['paginateContents', 'generateRandomAnswer']),
+    ...mapActions('game', [
+      'paginateContents',
+      'generateRandomAnswer',
+      'savePreferences',
+    ]),
     ...mapActions('common', ['appendContent']),
   },
 })
@@ -138,6 +142,7 @@ export default class ScoreBoard extends Vue {
   appendContent!: (routeParam: string) => Promise<void>;
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
+  savePreferences!: (save: any) => void;
   show = false;
   isNewHighScore = false;
   isSave = false;

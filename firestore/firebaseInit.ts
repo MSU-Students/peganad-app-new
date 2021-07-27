@@ -8,8 +8,8 @@ require('firebase/auth');
 const firestore = firebase.firestore();
 const storage = firebase.storage();
 if (location.hostname === 'localhost') {
-  firestore.useEmulator('localhost', 9012);
-  storage.useEmulator('localhost', 9011);
+  // firestore.useEmulator('localhost', 9012);
+  // storage.useEmulator('localhost', 9011);
 }
 
 export { firestore };

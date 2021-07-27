@@ -1,11 +1,18 @@
 <template>
-  <q-page class="bg-green-3 q-pa-md">
-    <div class="sub-header-container q-mt-am">
-      <div class="flex flex-center text-h2" style="height: 250px">
-        <span class="text-h3 animate__animated animate__fadeInDown">Choose Game</span>
+  <q-page class="bg-green-3 q-px-md">
+    <div class="sub-header-container q-pt-sm">
+      <div
+        class="flex flex-center text-center text-h2"
+        :style="$q.screen.height <= 731 ? 'height: 150px' : 'height: 200px'"
+      >
+        <span
+          class="text-h3 animate__animated animate__fadeInDown"
+          :class="$q.screen.height <= 731 ? 'text-h4' : 'text-h3'"
+          >Choose Game</span
+        >
       </div>
     </div>
-    <div class="row q-col-gutter-md">
+    <div class="row q-col-gutter-md q-pt-md">
       <div class="col-6 animate__animated animate__fadeInTopLeft">
         <q-card
           class="card bg-deep-purple-5"
@@ -45,8 +52,23 @@
   </q-page>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+import {Vue, Component} from 'vue-property-decorator';
+import {mapActions} from 'vuex';
+
+@Component({
+  methods: {
+    ...mapActions('game', ['savePreferences']),
+  },
+})
+export default class Game extends Vue {
+  savePreferences!: (save: any) => void;
+  created() {
+    this.savePreferences({
+      score: 0,
+    });
+  }
+}
 </script>
 
 <style scoped>
@@ -55,5 +77,22 @@ export default {};
   background-repeat: no-repeat;
   background-position: center;
   background-size: 250px;
+}
+
+.card {
+  height: 100%;
+}
+
+@media only screen and (max-height: 732px) {
+  /* All Mobile Manipulation */
+  .sub-header-container {
+    background-size: 200px;
+  }
+  .card {
+    height: 90%;
+  }
+  .q-img {
+    height: 75%;
+  }
 }
 </style>

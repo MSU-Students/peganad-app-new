@@ -1,8 +1,14 @@
 <template>
-  <div class="q-gutter-y-sm text-h5 text-bold text-center text-white">
+  <div
+    class="q-gutter-y-sm text-bold text-center text-white"
+    :class="$q.screen.height <= 731 ? 'text-h5' : ' text-h5'"
+  >
     <p>What is the Meranaw meaning of this {{ $route.params.id }}?</p>
 
-    <q-card class="my-card bg-purple-3 text-center" style="height: 556.6px">
+    <q-card
+      class="my-card bg-purple-3 text-center"
+      :style="$q.screen.height <= 731 ? 'height: 506.6px' : 'height: 556.6px'"
+    >
       <transition
         appear
         :enter-active-class="showElement ? 'animated fadeInLeft' : ''"
@@ -52,8 +58,8 @@
             <q-card-section class="text-center bg-white">
               <img
                 :src="`data:image/jpeg;base64,${content.img}`"
-                height="250"
-                width="250"
+                :height="$q.screen.height <= 731 ? '200' : '250'"
+                :width="$q.screen.height <= 731 ? '200' : '250'"
               />
             </q-card-section>
             <q-card-actions class="row q-col-gutter-md q-pa-md">
@@ -80,7 +86,7 @@
       </transition>
     </q-card>
     <q-btn
-      class="full-width q-mt-md"
+      class="full-width q-mt-md q-mb-xs"
       :class="btnAnimation()"
       size="lg"
       rounded
@@ -297,9 +303,6 @@ export default class GameCard extends Vue {
       this.audio.pause();
       this.audio.currentTime = 0;
     }
-    this.savePreferences({
-      score: 0,
-    });
     clearTimeout(this.game.currentTime);
   }
 }
