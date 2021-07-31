@@ -1,7 +1,16 @@
 <template>
   <q-page class="q-pa-md text-center bg-pink-4">
-    <div class="text-left">
+    <div class="row justify-between">
       <q-btn rounded color="white" text-color="black" icon="arrow_back" to="/" />
+      <q-btn
+        rounded
+        color="white"
+        text-color="pink-4"
+        label="Credits"
+        icon="favorite"
+        icon-right="arrow_forward"
+        to="/credit"
+      />
     </div>
     <div class="text-h3 text-white q-py-lg animate__animated animate__fadeInRight">
       About
@@ -25,9 +34,8 @@
       <q-separator inset color="grey-6" />
       <q-card-section class="q-pb-md">
         <div class="text-subtitle2">Developed By: Danieza Sarip</div>
-        <div class="text-subtitle1 text-pink-4">
-          Special thanks to: <b>ITSMarawi Family</b>
-          <q-icon class="q-pl-xs" name="favorite" />
+        <div class="text-center q-pt-sm text-pink-3 text-weight-bold">
+          © 2021 Phaganad. All rights reserved.
         </div>
       </q-card-section>
     </q-card>
