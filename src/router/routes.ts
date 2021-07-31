@@ -1,14 +1,5 @@
 import { RouteConfig } from 'vue-router';
 import MainLayout from 'layouts/MainLayout.vue';
-import Index from 'pages/Index.vue';
-import Learn from 'pages/learn/Learn.vue';
-import Game from 'pages/game/Game.vue';
-import LearnContent from 'pages/learn/LearnPageContent.vue';
-import GameContent from 'pages/game/GamePageContent.vue';
-import ScoreBoard from 'pages/ScoreBoard.vue';
-import LeaderBoard from 'pages/score/LeaderBoard.vue';
-import About from 'pages/About.vue';
-import router from '.';
 
 const routes: RouteConfig[] = [
   {
@@ -17,15 +8,16 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: '',
-        component: Index
+        component: () => import('pages/Index.vue')
       },
-      { path: 'learn', component: Learn },
-      { path: 'game', component: Game },
-      { path: 'learn/:id', name: 'learn-content', component: LearnContent },
-      { path: 'game/:id', name: 'game-content', component: GameContent },
-      { path: 'score/:id', name: 'player-score', component: ScoreBoard },
-      { path: 'board', name: 'leader-board', component: LeaderBoard },
-      { path: 'about', name: 'about-page', component: About }
+      { path: 'learn', component: () => import('pages/learn/Learn.vue') },
+      { path: 'game', component: () => import('pages/game/Game.vue') },
+      { path: 'learn/:id', name: 'learn-content', component: () => import('pages/learn/LearnPageContent.vue') },
+      { path: 'game/:id', name: 'game-content', component: () => import('pages/game/GamePageContent.vue') },
+      { path: 'score/:id', name: 'player-score', component: () => import('pages/ScoreBoard.vue') },
+      { path: 'board', name: 'leader-board', component: () => import('pages/score/LeaderBoard.vue') },
+      { path: 'about', name: 'about-page', component: () => import('pages/About.vue') },
+      { path: 'credit', name: 'credit-page', component: () => import('pages/Credit.vue') }
     ]
   },
 
