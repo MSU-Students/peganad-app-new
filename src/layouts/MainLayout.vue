@@ -79,6 +79,8 @@ export default class MainLayout extends Vue {
       return 'bg-pink-4';
     } else if (this.$route.path == `/score/${this.$route.params.id}`) {
       return 'bg-blue-2';
+    } else if (this.$route.path == '/credit') {
+      return 'bg-blue-4';
     }
   }
 
