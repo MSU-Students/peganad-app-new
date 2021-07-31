@@ -1,8 +1,8 @@
 {
-  "name": "peganad-app",
+  "name": "phaganad-app",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Peganad App",
+  "productName": "Phaganad App",
   "author": "maryamdanieza <saripdanieza@gmail.com>",
   "private": true,
   "scripts": {
@@ -10,6 +10,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@capacitor/android": "^2.4.8",
+    "@capacitor/cli": "^2.4.8",
+    "@capacitor/core": "^2.4.8",
     "@quasar/extras": "^1.0.0",
     "animate.css": "^4.1.1",
     "core-js": "^3.6.5",

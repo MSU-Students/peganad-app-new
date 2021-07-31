@@ -1,4 +1,4 @@
-# Peganad App (peganad-app)
+# Phaganad App (phaganad-app)
 
 A Quasar Framework app
 

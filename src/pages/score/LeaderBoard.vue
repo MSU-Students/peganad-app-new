@@ -42,11 +42,6 @@
           </div>
         </template>
       </q-card-section>
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat color="primary" @click="resetAnimal()"> Reset Score </q-btn>
-      </q-card-actions>
     </q-card>
 
     <q-card v-if="colorPlayer.length != 0" class="q-ma-md text-grey-9" flat bordered>
@@ -73,11 +68,6 @@
           </div>
         </template>
       </q-card-section>
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat color="primary" @click="resetColor()"> Reset Score </q-btn>
-      </q-card-actions>
     </q-card>
 
     <q-card v-if="numberPlayer.length != 0" class="q-ma-md text-grey-9" flat bordered>
@@ -104,11 +94,6 @@
           </div>
         </template>
       </q-card-section>
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat color="primary" @click="resetNumber()"> Reset Score </q-btn>
-      </q-card-actions>
     </q-card>
 
     <q-card v-if="wordPlayer.length != 0" class="q-ma-md text-grey-9" flat bordered>
@@ -135,11 +120,6 @@
           </div>
         </template>
       </q-card-section>
-      <q-separator />
-
-      <q-card-actions>
-        <q-btn flat color="primary" @click="resetWord()"> Reset Score </q-btn>
-      </q-card-actions>
     </q-card>
   </q-page>
 </template>
@@ -164,26 +144,6 @@ export default class Learderboard extends Vue {
     this.numberPlayer = number ? number.sort((a, b) => b.score - a.score) : [];
     const word = await localbaseService.getPlayer('score-words');
     this.wordPlayer = word ? word.sort((a, b) => b.score - a.score) : [];
-  }
-
-  async resetAnimal() {
-    await localbaseService.deletePlayer('score-animals');
-    this.animalPlayer = [];
-  }
-
-  async resetColor() {
-    await localbaseService.deletePlayer('score-colors');
-    this.colorPlayer = [];
-  }
-
-  async resetNumber() {
-    await localbaseService.deletePlayer('score-numbers');
-    this.numberPlayer = [];
-  }
-
-  async resetWord() {
-    await localbaseService.deletePlayer('score-words');
-    this.wordPlayer = [];
   }
 }
 </script>

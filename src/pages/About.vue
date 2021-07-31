@@ -7,13 +7,13 @@
       About
     </div>
     <q-card class="my-card text-grey-9 animate__animated animate__fadeInLeft">
-      <q-card-section class="text-h4"> Peganad App </q-card-section>
+      <q-card-section class="text-h4"> Phaganad App </q-card-section>
       <q-card-section class="text-body1">
-        The <b>Pegenad App</b> is from theMeranaw word which means “To learn”.
-        <b>Peganad App is a mobile learning application</b> that teaches basic Meranaw
+        The <b>Phaganad App</b> is from the Meranaw word which means “To learn”.
+        <b>Phaganad App is a mobile learning application</b> that teaches basic Meranaw
         vocabulary that will focus on the children as the primary user from ages 4-8. The
         learning application aims to help the children by providing alternative and
-        interactive learning materials. It offers 70 words through a series of lesson and
+        interactive learning materials. It offers 40 words through a series of lesson and
         game with native speaker audio clips.
       </q-card-section>
 
@@ -25,8 +25,25 @@
       <q-separator inset color="grey-6" />
       <q-card-section class="q-pb-md">
         <div class="text-subtitle2">Developed By: Danieza Sarip</div>
+        <div class="text-subtitle1 text-pink-4">
+          Special thanks to: <b>ITSMarawi Family</b>
+          <q-icon class="q-pl-xs" name="favorite" />
+        </div>
       </q-card-section>
     </q-card>
+    <q-btn
+      class="q-mt-xl full-width"
+      color="white"
+      text-color="pink-4"
+      label="Give Us Feedback"
+      type="a"
+      href="mailto:meranaw.app@gmail.com"
+      target="_blank"
+      icon="feedback"
+      no-caps
+      rounded
+    />
+    <div class="q-pt-xs text-white">Help us improve Phaganad App</div>
   </q-page>
 </template>
 

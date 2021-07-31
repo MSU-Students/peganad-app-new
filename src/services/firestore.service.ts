@@ -9,6 +9,7 @@ interface IContent {
 
 let nextQuery: any = undefined;
 let cursor = 0;
+let docSize = 0;
 class FirestoreService {
   async getContents(params: string): Promise<IContent[]> {
     $store.ref?.dispatch('ui/showProgress', 0);
@@ -16,7 +17,7 @@ class FirestoreService {
     let contentArr: any[] = [];
     return new Promise(async resolve => {
       try {
-        const docSize = (await firestore.collection(params).get()).docs.length;
+        docSize = (await firestore.collection(params).get()).docs.length;
         $store.ref?.dispatch('ui/getDocSize', docSize);
         do {
           let firstQuery = nextQuery
@@ -43,6 +44,7 @@ class FirestoreService {
         if (cursor == docSize) {
           resolve(contentArr);
           cursor = 0;
+          docSize = 0;
         }
       } catch (error) {
         console.log(error.message);

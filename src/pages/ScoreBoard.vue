@@ -82,21 +82,25 @@
         </q-card-section>
         <q-card-actions align="center" class="q-gutter-y-sm q-pt-xl q-pb-md">
           <q-btn
+            class="text-bold"
             rounded
             push
             color="green-5"
+            size="lg"
             :label="isNewHighScore ? 'Save' : 'Play Again?'"
             @click="isNewHighScore ? savePlayerStat() : playAgain()"
-            style="width: 60%"
+            style="width: 80%"
           >
           </q-btn>
           <q-btn
+            class="text-bold"
             rounded
             push
             color="red-5"
             label="Exit Quiz"
+            size="lg"
             to="/game"
-            style="width: 60%"
+            style="width: 80%"
           >
           </q-btn>
         </q-card-actions>

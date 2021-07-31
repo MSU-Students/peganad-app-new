@@ -71,8 +71,14 @@ export default class MainLayout extends Vue {
       return 'bg-green-3';
     } else if (this.$route.path == `/game/${this.$route.params.id}`) {
       return 'bg-info';
-    } else {
-      return 'bg-white';
+    } else if (this.$route.path == '/') {
+      return 'bg-yellow-1';
+    } else if (this.$route.path == '/board') {
+      return 'bg-info';
+    } else if (this.$route.path == '/about') {
+      return 'bg-pink-4';
+    } else if (this.$route.path == `/score/${this.$route.params.id}`) {
+      return 'bg-blue-2';
     }
   }
 

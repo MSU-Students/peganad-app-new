@@ -19,6 +19,10 @@ class ContentService {
         const res = await this.updateContent(category, onlineContent);
         if (path != 'learn-content') {
           res.sort(() => Math.random() - 0.5);
+          // res.splice(10, res.length);
+          if (res.length >= 10) {
+            res.length = 10;
+          }
         }
         return res;
       } else {
@@ -28,6 +32,10 @@ class ContentService {
       const res = await localbaseService.setContent(category, localContent);
       if (path != 'learn-content') {
         res.sort(() => Math.random() - 0.5);
+        // res.splice(10, res.length);
+        if (res.length >= 10) {
+          res.length = 10;
+        }
       }
       return res;
     }

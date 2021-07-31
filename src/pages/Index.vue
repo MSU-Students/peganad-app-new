@@ -5,7 +5,7 @@
       <h3
         class="text-center q-pt-xs text-grey-9 text-bold animate__animated animate__fadeInDown"
       >
-        Peganad App
+        Phaganad App
       </h3>
       <q-card
         class="learn-card cursor-pointer text-grey-9 bg-green-2 animate__animated animate__fadeInLeft"

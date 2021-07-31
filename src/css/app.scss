@@ -1,5 +1,11 @@
 // app global css in SCSS form
 
+.q-header {
+  padding-top: 35px;
+}
+
+// custom font
+
 @font-face {
     font-family: 'custom-font';
     src: url('./fonts/Poppins-Bold.ttf');

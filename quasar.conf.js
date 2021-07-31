@@ -94,7 +94,8 @@ module.exports = configure(function (/* ctx */) {
           // On the other hand, the following completely
           // disables Quasar's back button management.
           // Requires Quasar v1.14.1+
-          backButton: true
+          backButton: true,
+          iosStatusBarPadding: true
         }
       },
 
@@ -128,8 +129,8 @@ module.exports = configure(function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Peganad App',
-        short_name: 'Peganad App',
+        name: 'Phaganad App',
+        short_name: 'Phaganad App',
         description: 'A Quasar Framework app',
         display: 'standalone',
         orientation: 'portrait',
@@ -195,7 +196,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'peganad-app'
+        appId: 'phaganad-app'
       },
 
       // More info: https://v1.quasar.dev/quasar-cli/developing-electron-apps/node-integration
