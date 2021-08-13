@@ -1,6 +1,6 @@
 {
-  "appId": "org.peganad.app",
-  "appName": "Peganad App",
+  "appId": "org.pheganad.app",
+  "appName": "Phaganad App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www"
