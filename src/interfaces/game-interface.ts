@@ -1,5 +1,5 @@
 export interface IGame {
-  currentTime: number;
+  currentTime?: number;
   timer: number;
   questionCounter: number;
   correctAnswer: number;
@@ -8,6 +8,11 @@ export interface IGame {
     index: number | undefined;
     answer: string;
   };
+}
+
+export interface ISelectedAnswer {
+  index: number;
+  answer: string;
 }
 
 export interface IGameAnswer {
