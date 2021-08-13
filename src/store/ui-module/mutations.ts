@@ -5,6 +5,9 @@ const mutation: MutationTree<UiStateInterface> = {
   showLoading(state, isLoad) {
     state.isPageLoading = isLoad;
   },
+  showUpdateContent(state, isNew) {
+    state.hasNewContent = isNew;
+  },
   showProgress(state, cursor) {
     state.progress = cursor;
   },

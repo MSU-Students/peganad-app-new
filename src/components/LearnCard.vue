@@ -1,5 +1,15 @@
 <template>
-  <div class="q-gutter-y-md" style="width: 100%">
+  <div class="q-gutter-y-md text-center" style="width: 100%">
+    <q-btn
+      v-if="hasNewContent"
+      rounded
+      push
+      color="green"
+      icon="download"
+      label="New Content"
+      :loading="loading"
+      @click="updateNewContent()"
+    />
     <q-card
       class="my-card bg-yellow-3 q-pt-xs q-ma-md"
       v-for="(content, index) in contents"
@@ -35,20 +45,34 @@
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
-import {IContent} from 'src/interfaces/common-interface';
+import {IAppendContentParam, IContent} from 'src/interfaces/common-interface';
 import helperService from 'src/services/helper.service';
-import {mapState} from 'vuex';
+import {mapState, mapActions} from 'vuex';
+import {localbaseService} from 'src/services/localbase.service';
+import {Loading} from 'quasar';
 
 @Component({
   computed: {
     ...mapState('common', ['contents']),
+    ...mapState('ui', ['hasNewContent']),
+  },
+  methods: {
+    ...mapActions('common', ['checkNewContent', 'updateContent']),
+    ...mapActions('ui', ['showLoading', 'showUpdateContent']),
   },
 })
 export default class LearnCard extends Vue {
   // Your local data for storing DB datas
   contents!: IContent[];
+  checkNewContent!: (param: IAppendContentParam) => Promise<void>;
+  updateContent!: (param: IAppendContentParam) => Promise<void>;
+  showLoading!: (isLoad: boolean) => void;
+  showUpdateContent!: (isLoad: boolean) => void;
+  hasNewContent!: boolean;
   showAudioLoader = false;
+  loading = false;
   tappedIndex = 0;
+  localContent: IContent[] = [];
 
   async playAudio(audioBase64: string, index: number) {
     this.showAudioLoader = true;
@@ -58,6 +82,25 @@ export default class LearnCard extends Vue {
     audio.onended = () => {
       this.showAudioLoader = false;
     };
+  }
+
+  async created() {
+    if (navigator.onLine) {
+      await this.checkNewContent({
+        category: this.$route.params.id,
+        path: this.$route.name,
+      });
+    }
+  }
+
+  async updateNewContent() {
+    this.loading = true;
+    await this.updateContent({
+      category: this.$route.params.id,
+      path: this.$route.name,
+    });
+    this.showUpdateContent(false);
+    this.loading = false;
   }
 }
 </script>

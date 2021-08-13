@@ -174,7 +174,6 @@ export default class ScoreBoard extends Vue {
   }
 
   async checkPlayersStat(): Promise<void> {
-    console.log('scoreboard: ', this.gamePreference.score);
     const status = await playerService.checkPlayersStat(
       `score-${this.$route.params.id}`,
       this.gamePreference.score
@@ -193,7 +192,6 @@ export default class ScoreBoard extends Vue {
       this.playerName == '' ||
       this.playerName.length >= 10
     ) {
-      console.log(this.playerName.length);
       this.formHasError = true;
     } else {
       const playerStats: IPlayer = {

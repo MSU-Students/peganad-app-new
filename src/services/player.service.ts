@@ -21,7 +21,6 @@ class PlayerService {
 
   async savePlayerStat(category: string, playerStat: IPlayer) {
     const playerList: IPlayer[] = await localbaseService.getPlayer(category);
-    console.log(category, playerStat);
     if (!playerList) {
       await localbaseService.setPlayer(category, [playerStat]);
     } else if (playerList.length != playersSize) {
@@ -30,7 +29,6 @@ class PlayerService {
     } else {
       if (playerList.some(item => item.score < playerStat.score)) {
         const sortPlayers = playerList.sort((a, b) => a.score - b.score);
-        console.log(sortPlayers);
         sortPlayers[0] = Object.assign({}, playerStat);
         await localbaseService.setPlayer(category, playerList);
       } else {

@@ -304,7 +304,6 @@ export default class GameCard extends Vue {
   }
 
   destroyed() {
-    console.log('exit game card!');
     if (this.audio) {
       this.audio.pause();
       this.audio.currentTime = 0;

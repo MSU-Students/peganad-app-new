@@ -1,5 +1,6 @@
 export interface UiStateInterface {
   isPageLoading: boolean;
+  hasNewContent: boolean;
   progress: number;
   docSize: number;
 }
@@ -7,6 +8,7 @@ export interface UiStateInterface {
 function state(): UiStateInterface {
   return {
     isPageLoading: false,
+    hasNewContent: false,
     progress: 0,
     docSize: 0
   };

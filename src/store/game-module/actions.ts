@@ -30,7 +30,6 @@ const actions: ActionTree<GameStateInterface, StateInterface> = {
   },
 
   savePreferences(context, preference: IGame): void {
-    console.log(preference);
     context.commit('savePreferences', preference);
   },
 

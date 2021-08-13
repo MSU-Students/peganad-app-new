@@ -1,8 +1,8 @@
 <template>
-  <q-page class="q-pa-md bg-info flex flex-center">
+  <q-page class="q-px-lg bg-info flex flex-center">
     <LearnCard v-if="!isPageLoading && contents.length != 0" />
+    <NoContent v-else-if="contents.length == 0 && !isPageLoading" />
     <PageLodaer v-else-if="isPageLoading" />
-    <NoContent v-else-if="contents.length == 0" />
   </q-page>
 </template>
 

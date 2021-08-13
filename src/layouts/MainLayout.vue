@@ -111,12 +111,7 @@ export default class MainLayout extends Vue {
       .onOk(async () => {
         await this.$router.replace('/game');
       })
-      .onCancel(() => {
-        // console.log('>>>> Cancel')
-      })
-      .onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      });
+      .onCancel(() => {});
   }
 }
 </script>

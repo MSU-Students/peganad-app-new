@@ -47,7 +47,6 @@ export default class LearnPageContent extends Vue {
   }
 
   async fetchContent(): Promise<void> {
-    console.log('page loader!');
     this.showLoading(true);
     await this.appendContent({
       category: this.$route.params.id,

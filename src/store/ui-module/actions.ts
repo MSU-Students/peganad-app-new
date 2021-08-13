@@ -6,6 +6,9 @@ const actions: ActionTree<UiStateInterface, StateInterface> = {
   showLoading(context, isLoad) {
     context.commit('showLoading', isLoad);
   },
+  showUpdateContent(context, isNew) {
+    context.commit('showUpdateContent', isNew);
+  },
   showProgress(context, cursor) {
     context.commit('showProgress', cursor);
   },
