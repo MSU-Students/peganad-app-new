@@ -1,11 +1,6 @@
 import { firestore } from 'app/firestore/firebaseInit';
+import { IContent } from 'src/interfaces/common-interface';
 import { $store } from 'src/store';
-interface IContent {
-  name: string;
-  translatedName: string;
-  img: string;
-  audio: string;
-}
 
 let nextQuery: any = undefined;
 let cursor = 0;

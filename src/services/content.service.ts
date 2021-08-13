@@ -7,7 +7,7 @@ class ContentService {
     category: string,
     path: string
   ): Promise<IContent[]> {
-    let localContent = await localbaseService.getContents(category);
+    const localContent = await localbaseService.getContents(category);
     if (
       !localContent ||
       localContent.length == 0 ||
@@ -49,11 +49,10 @@ class ContentService {
     return new Promise(resolve => {
       try {
         if (typeof docData != 'undefined') {
-          let newContent: IContent[] = [];
+          const newContent: IContent[] = [];
           docData.map(async doc => {
-            let updatedContent = {
-              name: doc.name,
-              translatedName: doc.translatedName,
+            const updatedContent = {
+              ...doc,
               img: (await this.getBase64FromUrl(doc.img)) as string,
               audio: (await this.getBase64FromUrl(doc.audio)) as string
             };
@@ -76,17 +75,15 @@ class ContentService {
   async getBase64FromUrl(url: string) {
     try {
       if (navigator.onLine) {
-        var res = await fetch(url);
-        var blob = await res.blob();
+        const res = await fetch(url);
+        const blob = await res.blob();
 
         return new Promise((resolve, reject) => {
-          var reader: any = new FileReader();
+          const reader: FileReader = new FileReader();
           reader.addEventListener(
             'load',
             function() {
-              var base64data = reader.result.substr(
-                reader.result.indexOf(',') + 1
-              );
+              const base64data = reader.result;
               resolve(base64data);
             },
             false
@@ -134,20 +131,20 @@ class ContentService {
   async generateRandomAnswer(
     contents: IContent[],
     correctAns: string
-  ): Promise<IContent[]> {
+  ): Promise<string[]> {
     return new Promise(resolve => {
       const extractContent = contents;
-      const answersArr: IContent[] = [];
+      const answersArr: string[] = [];
 
       extractContent.forEach((content: IContent) => {
-        answersArr.unshift(content.translatedName as any);
+        answersArr.unshift(content.translatedName);
       });
 
       answersArr.sort(() => Math.random() - 0.5); // random the new elements
       const correctAnswer = correctAns;
-      const newAnsArr = answersArr.filter((item: any) => item != correctAnswer); // Remove answer in array
+      const newAnsArr = answersArr.filter((item: string) => item != correctAnswer); // Remove answer in array
       newAnsArr.length = 3; // Limit length
-      newAnsArr.unshift(correctAnswer as any); // Add answer array
+      newAnsArr.unshift(correctAnswer); // Add answer array
       newAnsArr.sort(() => Math.random() - 0.5); // random the new elements
       resolve(newAnsArr);
     });
