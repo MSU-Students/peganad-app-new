@@ -12,7 +12,7 @@ import LearnCard from 'components/LearnCard.vue';
 import PageLodaer from 'components/PageLoader.vue';
 import NoContent from 'components/NoContent.vue';
 import {mapState, mapActions} from 'vuex';
-import {IContent} from 'src/interfaces/common-interface';
+import {IAppendContentParam, IContent} from 'src/interfaces/common-interface';
 
 @Component({
   components: {
@@ -32,7 +32,7 @@ import {IContent} from 'src/interfaces/common-interface';
 export default class LearnPageContent extends Vue {
   isPageLoading!: boolean;
   contents!: IContent[];
-  appendContent!: (param: any) => Promise<void>;
+  appendContent!: (param: IAppendContentParam) => Promise<void>;
   showLoading!: (isLoad: boolean) => void;
   async created() {
     this.showLoading(true);

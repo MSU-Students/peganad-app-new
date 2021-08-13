@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import {IContent} from 'src/interfaces/common-interface';
+import {IContent, ISavePreference} from 'src/interfaces/common-interface';
 import {Vue, Component} from 'vue-property-decorator';
 import {mapState, mapActions} from 'vuex';
 import playerService from 'src/services/player.service';
@@ -146,7 +146,7 @@ export default class ScoreBoard extends Vue {
   appendContent!: (routeParam: string) => Promise<void>;
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
-  savePreferences!: (save: any) => void;
+  savePreferences!: (save: ISavePreference) => void;
   show = false;
   isNewHighScore = false;
   isSave = false;

@@ -25,7 +25,7 @@
           Panelists: <br />
           <b>Prof. Mudzna M. Asakil</b>
           <br />
-          <b>Prof. Zacaria Gulam</b>
+          <b>Prof. Sacaria B. Gulam</b>
         </div>
         <div class="text-body1 q-pt-sm">
           Technical Adviser:<br />

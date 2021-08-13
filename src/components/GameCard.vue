@@ -57,7 +57,7 @@
 
             <q-card-section class="text-center bg-white">
               <img
-                :src="`data:image/jpeg;base64,${content.img}`"
+                :src="content.img"
                 :height="$q.screen.height <= 731 ? '200' : '250'"
                 :width="$q.screen.height <= 731 ? '200' : '250'"
               />
@@ -106,9 +106,16 @@
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
 import {IContent} from 'src/interfaces/common-interface';
-import {IGame, IGameAnswer, IUiPreference} from 'src/interfaces/game-interface';
+import {
+  IGame,
+  IGameAnswer,
+  ISelectedAnswer,
+  IUiPreference,
+} from 'src/interfaces/game-interface';
 import {mapState, mapActions} from 'vuex';
 import helperService from 'src/services/helper.service';
+
+type ISavePreferences = Pick<IGame, 'currentTime' | 'score' | 'correctAnswer'>;
 
 @Component({
   computed: {
@@ -133,7 +140,7 @@ export default class GameCard extends Vue {
   paginateContents!: (contents: IContent[]) => Promise<void>;
   generateRandomAnswer!: (contents: IContent[]) => Promise<void>;
   changeContentPosition!: (position: number) => void;
-  savePreferences!: (save: any) => void;
+  savePreferences!: (save: ISavePreferences) => void;
   game: IGame = {
     currentTime: 0,
     timer: 10,
@@ -159,6 +166,7 @@ export default class GameCard extends Vue {
   async created() {
     this.showElement = true;
     await this.showContent();
+    return;
   }
 
   async showContent(): Promise<void> {
@@ -169,9 +177,9 @@ export default class GameCard extends Vue {
     this.uiPrefrence.selectedBtnTextColor = 'white';
   }
 
-  selectAnswer(selectedOptions: {[key: string]: any}): void {
-    this.game.selectedAnswer.index = selectedOptions.index;
-    this.game.selectedAnswer.answer = selectedOptions.answer;
+  selectAnswer(selectedAnswer: ISelectedAnswer): void {
+    this.game.selectedAnswer.index = selectedAnswer.index;
+    this.game.selectedAnswer.answer = selectedAnswer.answer;
     this.uiPrefrence.isAnswerSelect = true;
     this.uiPrefrence.selectedBtnColor = 'purple-10';
     this.uiPrefrence.selectedBtnTextColor = 'white';
@@ -190,18 +198,14 @@ export default class GameCard extends Vue {
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = false;
       this.uiPrefrence.isCorrect = true;
-      const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/correct.wav')
-      );
+      const audio = helperService.playAudio(require('src/assets/game-audio/correct.wav'));
       await audio.play();
     } else {
       this.uiPrefrence.selectedBtnColor = 'red-5';
       this.uiPrefrence.selectedBtnTextColor = 'white';
       this.uiPrefrence.isWrong = true;
       this.uiPrefrence.isCorrect = false;
-      const audio: HTMLAudioElement = await helperService.playAudio(
-        require('src/assets/game-audio/wrong.wav')
-      );
+      const audio = helperService.playAudio(require('src/assets/game-audio/wrong.wav'));
       await audio.play();
     }
     clearTimeout(this.game.currentTime);
@@ -219,7 +223,7 @@ export default class GameCard extends Vue {
       this.savePreferences({
         score: this.game.score,
         correctAnswer: this.game.correctAnswer,
-        curretTime: this.game.currentTime,
+        currentTime: this.game.currentTime,
       });
       clearTimeout(this.game.currentTime);
       await this.showContent();
@@ -250,31 +254,33 @@ export default class GameCard extends Vue {
   }
 
   countDownTimer() {
-    this.game.currentTime = setTimeout(async () => {
-      if (this.game.timer > 0) {
-        this.game.timer -= 1;
-        if (this.game.timer == 4) {
-          this.uiPrefrence.counterTextColor = 'text-red';
-          const audio: HTMLAudioElement = await helperService.playAudio(
-            require('src/assets/game-audio/countdown.wav')
-          );
-          this.audio = audio;
-          await audio.play();
-        } else if (this.game.timer == 0) {
-          this.uiPrefrence.selectedBtnColor = 'red-5';
-          this.uiPrefrence.selectedBtnTextColor = 'white';
-          this.uiPrefrence.isAnswerCheck = true;
-          this.uiPrefrence.isAnswerSelect = true;
-          this.uiPrefrence.isWrong = true;
-          const audio: HTMLAudioElement = await helperService.playAudio(
-            require('src/assets/game-audio/wrong.wav')
-          );
-          await audio.play();
-          clearTimeout(this.game.currentTime);
+    this.game.currentTime = (setTimeout(() => {
+      async () => {
+        if (this.game.timer > 0) {
+          this.game.timer -= 1;
+          if (this.game.timer == 4) {
+            this.uiPrefrence.counterTextColor = 'text-red';
+            const audio = helperService.playAudio(
+              require('src/assets/game-audio/countdown.wav')
+            );
+            this.audio = audio;
+            await audio.play();
+          } else if (this.game.timer == 0) {
+            this.uiPrefrence.selectedBtnColor = 'red-5';
+            this.uiPrefrence.selectedBtnTextColor = 'white';
+            this.uiPrefrence.isAnswerCheck = true;
+            this.uiPrefrence.isAnswerSelect = true;
+            this.uiPrefrence.isWrong = true;
+            const audio = helperService.playAudio(
+              require('src/assets/game-audio/wrong.wav')
+            );
+            await audio.play();
+            clearTimeout(this.game.currentTime);
+          }
         }
-      }
+      };
       this.countDownTimer();
-    }, 1000) as any;
+    }, 1000) as unknown) as number;
   }
 
   btnAnimation() {

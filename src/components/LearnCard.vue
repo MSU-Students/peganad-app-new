@@ -7,10 +7,13 @@
     >
       <q-card-section class="text-center">
         <div class="text-h4">{{ content.name }}</div>
-        <img :src="`data:image/jpeg;base64,${content.img}`" height="250" width="250" />
+        <img :src="content.img" height="250" width="250" />
       </q-card-section>
       <q-card-actions class="column q-gutter-y-xs bg-white" align="center">
         <div class="text-h4">{{ content.translatedName }}</div>
+        <div class="text-subtitle1 text-grey-8 q-pb-md">
+          ['{{ content.orthography }}']
+        </div>
         <q-btn
           class="full-width"
           size="lg"
@@ -34,7 +37,7 @@
 import {Vue, Component} from 'vue-property-decorator';
 import {IContent} from 'src/interfaces/common-interface';
 import helperService from 'src/services/helper.service';
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 
 @Component({
   computed: {
@@ -47,11 +50,10 @@ export default class LearnCard extends Vue {
   showAudioLoader = false;
   tappedIndex = 0;
 
-  async playAudio(base64string: string, index: number) {
+  async playAudio(audioBase64: string, index: number) {
     this.showAudioLoader = true;
     this.tappedIndex = index;
-    let audioBase64 = 'data:audio/wav;base64,' + base64string;
-    let audio: any = await helperService.playAudio(audioBase64);
+    const audio = helperService.playAudio(audioBase64);
     await audio.play();
     audio.onended = () => {
       this.showAudioLoader = false;

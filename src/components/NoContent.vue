@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
 
 @Component({
   computed: {

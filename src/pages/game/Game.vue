@@ -53,6 +53,7 @@
 </template>
 
 <script lang="ts">
+import {ISavePreference} from 'src/interfaces/common-interface';
 import {Vue, Component} from 'vue-property-decorator';
 import {mapActions} from 'vuex';
 
@@ -62,7 +63,7 @@ import {mapActions} from 'vuex';
   },
 })
 export default class Game extends Vue {
-  savePreferences!: (save: any) => void;
+  savePreferences!: (save: ISavePreference) => void;
   created() {
     this.savePreferences({
       score: 0,
