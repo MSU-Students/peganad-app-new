@@ -7,7 +7,6 @@ const mutation: MutationTree<UiStateInterface> = {
   },
   showProgress(state, cursor) {
     state.progress = cursor;
-    console.log('progress: ', state.progress);
   },
   setDocSize(state, size) {
     state.docSize = size;

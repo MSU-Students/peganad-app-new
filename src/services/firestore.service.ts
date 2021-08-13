@@ -2,7 +2,7 @@ import { firestore } from 'app/firestore/firebaseInit';
 import { IContent } from 'src/interfaces/common-interface';
 import { $store } from 'src/store';
 
-let nextQuery: any = undefined;
+let nextQuery!: any;
 let cursor = 0;
 let docSize = 0;
 class FirestoreService {
@@ -37,9 +37,9 @@ class FirestoreService {
           }
         } while (cursor < docSize && navigator.onLine);
         if (cursor == docSize) {
-          resolve(contentArr);
           cursor = 0;
           docSize = 0;
+          resolve(contentArr);
         }
       } catch (error) {
         console.log(error.message);
