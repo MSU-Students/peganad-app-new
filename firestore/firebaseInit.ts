@@ -6,7 +6,7 @@ firebase.initializeApp(firebaseConfig);
 require('firebase/auth');
 
 const firestore = firebase.firestore();
-const storage = firebase.storage();
+// const storage = firebase.storage();
 if (location.hostname === 'localhost') {
   // firestore.useEmulator('localhost', 9012);
   // storage.useEmulator('localhost', 9011);
