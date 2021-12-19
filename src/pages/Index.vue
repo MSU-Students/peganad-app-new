@@ -1,9 +1,9 @@
 <template>
-  <q-page class="q-pa-md bg-yellow-1">
+  <q-page class="q-pa-md bg-blue">
     <!-- <Header/>bg-cyan -->
     <div class="q-gutter-y-lg">
       <h3
-        class="text-center q-pt-xs text-grey-9 text-bold animate__animated animate__fadeInDown"
+        class="text-center q-pt-xs text-white text-bold animate__animated animate__fadeInDown"
       >
         Phaganad App
       </h3>
